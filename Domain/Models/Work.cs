@@ -5,8 +5,8 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Context { get; set; }
-        public User CustomerUser { get; set; }
-        public User Worker { get; set; }
+        public Customer Customer { get; set; }
+        public Employee Worker { get; set; }
         public bool IsFinished { get; set; }
         public  List<Category> Categories { get; set; }
         public double Price { get; set; }

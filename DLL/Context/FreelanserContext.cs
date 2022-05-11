@@ -1,11 +1,6 @@
 ﻿using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DLL.Context
 {
@@ -32,16 +27,37 @@ namespace DLL.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        protected void ConfigureUserInfo(EntityTypeBuilder<UserInfo> builder)
+        protected void ConfigureEmployee(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasOne(x => x.User).WithOne(x => x.UserInfo);
-            builder.HasMany(x => x.Skills);
-            //builder.HasMany(x => x.Reviews).WithOne(x => x.UserInf);
+            builder.HasOne(x => x.User);
+            builder.HasMany(x => x.Skills).WithMany(x=>x.Employees);
+            builder.HasMany(x => x.Reviews).WithOne(x => x.Worker);
+            builder.HasMany(x => x.ExecutedWorks).WithOne(x => x.Worker);
+            //builder.Property(q => q.RegisterTime).HasColumnType("datetime2");
 
         }
-        protected void ConfigureWork(EntityTypeBuilder<Work> builder)
+        protected void ConfigureCustomer(EntityTypeBuilder<Customer> builder)
+        {
+            builder.HasMany(x => x.Work).WithOne(x => x.Customer);
+            builder.HasMany(x => x.Reviews).WithOne(x => x.Customer);
+
+        }
+        protected void ConfigureCustomer(EntityTypeBuilder<Work> builder)
         {
             builder.HasMany(x => x.Coments).WithOne(x => x.Work);
+            builder.HasMany<Category>().WithMany(x => x.Works);
+
+        }
+        public void ConfigureCategory(EntityTypeBuilder<Category> builder)
+        {
+            builder.HasMany(x => x.SubCategory).WithOne(x => x.ParentCategory);
+            
+        }
+        protected void ConfigureUser(EntityTypeBuilder<User> builder)
+        {
+            builder.HasOne(x => x.UserInfo).WithOne(x=>x.User);
+            
+
 
         }
     }

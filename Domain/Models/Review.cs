@@ -5,8 +5,8 @@
         public int Id { get; set; }
         public string? Text { get; set; }
         public DateTime CreatedTime { get; set; }
-        public User Client { get; set; }
+        public Customer Customer { get; set; }
         public int Rating { get; set; }
-        public User User { get; set; }
+        public Employee Worker { get; set; }
     }
 }

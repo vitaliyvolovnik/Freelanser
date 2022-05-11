@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    internal class Employee
+    public class Employee
     {
+        public int Id { get; set; }
+        public double Rating { get; set; }
+        public User User { get; set; }
+        public List<Review> Reviews { get; set; }
+        public List<Skill> Skills { get; set; }
+        public List<Work> ExecutedWorks { get; set; }
+
     }
 }

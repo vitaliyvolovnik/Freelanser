@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    internal class Customer
+    public class Customer
     {
+        public int Id { get; set; }
+        public User User { get; set; } 
+        public List<Work> Work { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }
