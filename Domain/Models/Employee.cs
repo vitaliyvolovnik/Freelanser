@@ -8,7 +8,7 @@ namespace Domain.Models
 {
     public class Employee
     {
-        public int Id { get; set; }
+        public int EmployeeId { get; set; }
         public double Rating { get; set; }
         public User User { get; set; }
         public List<Review> Reviews { get; set; }

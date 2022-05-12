@@ -20,16 +20,22 @@ namespace DLL.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserInfo> UserInfos { get; set; }
         public DbSet<Work> Works { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            ConfigureEmployee(modelBuilder.Entity<Employee>());
+            ConfigureCustomer(modelBuilder.Entity<Customer>());
+            ConfigureWork(modelBuilder.Entity<Work>());
+            ConfigureUser(modelBuilder.Entity<User>());
+            
             base.OnModelCreating(modelBuilder);
         }
 
         protected void ConfigureEmployee(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasOne(x => x.User);
+            builder.HasOne(x => x.User).WithOne(x=>x.Employee).HasForeignKey<Employee>(x=>x.EmployeeId);
             builder.HasMany(x => x.Skills).WithMany(x=>x.Employees);
             builder.HasMany(x => x.Reviews).WithOne(x => x.Worker);
             builder.HasMany(x => x.ExecutedWorks).WithOne(x => x.Worker);
@@ -38,27 +44,21 @@ namespace DLL.Context
         }
         protected void ConfigureCustomer(EntityTypeBuilder<Customer> builder)
         {
+            builder.HasOne(x => x.User).WithOne(x => x.Customer).HasForeignKey<Customer>(x => x.CustomerId);
             builder.HasMany(x => x.Work).WithOne(x => x.Customer);
             builder.HasMany(x => x.Reviews).WithOne(x => x.Customer);
 
         }
-        protected void ConfigureCustomer(EntityTypeBuilder<Work> builder)
+        protected void ConfigureWork(EntityTypeBuilder<Work> builder)
         {
             builder.HasMany(x => x.Coments).WithOne(x => x.Work);
-            builder.HasMany<Category>().WithMany(x => x.Works);
+            builder.HasMany(x=>x.Categories).WithMany(x => x.Works);
 
-        }
-        public void ConfigureCategory(EntityTypeBuilder<Category> builder)
-        {
-            builder.HasMany(x => x.SubCategory).WithOne(x => x.ParentCategory);
-            
         }
         protected void ConfigureUser(EntityTypeBuilder<User> builder)
         {
-            builder.HasOne(x => x.UserInfo).WithOne(x=>x.User);
-            
-
-
+            builder.HasOne(x => x.UserInfo).WithOne(x => x.User).HasForeignKey<UserInfo>(x => x.UserId);
         }
+        
     }
 }

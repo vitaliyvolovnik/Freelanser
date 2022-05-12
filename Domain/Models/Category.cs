@@ -5,7 +5,6 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Category> SubCategory { get; set; }
-        public Category ParentCategory { get; set; }
         public List<Work> Works { get; set; }
     }
     

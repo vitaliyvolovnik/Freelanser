@@ -10,6 +10,7 @@
         //public DateTime RegisterTime { get; set; }
         public string? Information { get; set; }
         public User User { get; set; }
+        public int UserId { get; set; }
         
     }
 }
