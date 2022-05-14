@@ -9,6 +9,7 @@
         //public User CustomerUser { get; set; }
         public User User { get; set; }
         public Work Work { get; set; }
+        public bool IsMainComment { get; set; }
 
     }
 }

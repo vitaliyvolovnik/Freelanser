@@ -1,10 +1,11 @@
 ﻿using Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DLL.Context
 {
-    public class FreelanserContext:DbContext
+    public class FreelanserContext : IdentityDbContext
     {
         public FreelanserContext(DbContextOptions<FreelanserContext> options) : base(options)
         {
@@ -28,15 +29,15 @@ namespace DLL.Context
             ConfigureEmployee(modelBuilder.Entity<Employee>());
             ConfigureCustomer(modelBuilder.Entity<Customer>());
             ConfigureWork(modelBuilder.Entity<Work>());
-            ConfigureUser(modelBuilder.Entity<User>());
-            
+            ConfigureUserInfo(modelBuilder.Entity<UserInfo>());
+
             base.OnModelCreating(modelBuilder);
         }
 
         protected void ConfigureEmployee(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasOne(x => x.User).WithOne(x=>x.Employee).HasForeignKey<Employee>(x=>x.EmployeeId);
-            builder.HasMany(x => x.Skills).WithMany(x=>x.Employees);
+            builder.HasOne(x => x.User).WithOne(x => x.Employee).HasForeignKey<Employee>(x => x.UserId);
+            builder.HasMany(x => x.Skills).WithMany(x => x.Employees);
             builder.HasMany(x => x.Reviews).WithOne(x => x.Worker);
             builder.HasMany(x => x.ExecutedWorks).WithOne(x => x.Worker);
             //builder.Property(q => q.RegisterTime).HasColumnType("datetime2");
@@ -44,7 +45,7 @@ namespace DLL.Context
         }
         protected void ConfigureCustomer(EntityTypeBuilder<Customer> builder)
         {
-            builder.HasOne(x => x.User).WithOne(x => x.Customer).HasForeignKey<Customer>(x => x.CustomerId);
+            builder.HasOne(x => x.User).WithOne(x => x.Customer).HasForeignKey<Customer>(x => x.UserId);
             builder.HasMany(x => x.Work).WithOne(x => x.Customer);
             builder.HasMany(x => x.Reviews).WithOne(x => x.Customer);
 
@@ -52,13 +53,13 @@ namespace DLL.Context
         protected void ConfigureWork(EntityTypeBuilder<Work> builder)
         {
             builder.HasMany(x => x.Coments).WithOne(x => x.Work);
-            builder.HasMany(x=>x.Categories).WithMany(x => x.Works);
+            builder.HasMany(x => x.Categories).WithMany(x => x.Works);
 
         }
-        protected void ConfigureUser(EntityTypeBuilder<User> builder)
+        protected void ConfigureUserInfo(EntityTypeBuilder<UserInfo> builder)
         {
-            builder.HasOne(x => x.UserInfo).WithOne(x => x.User).HasForeignKey<UserInfo>(x => x.UserId);
+            builder.HasOne(x => x.User).WithOne(x => x.UserInfo);
         }
-        
+
     }
 }

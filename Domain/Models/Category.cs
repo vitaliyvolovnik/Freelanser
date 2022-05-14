@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsMainCategory { get; set; }
         public List<Category> SubCategory { get; set; }
         public List<Work> Works { get; set; }
     }
