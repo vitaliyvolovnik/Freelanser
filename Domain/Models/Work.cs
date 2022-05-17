@@ -6,8 +6,9 @@
         public string Name { get; set; }
         public string Context { get; set; }
         public Customer Customer { get; set; }
-        public Employee Worker { get; set; }
+        public Employee? Worker { get; set; }
         public bool IsFinished { get; set; }
+        public bool IsPublicshed { get; set; }
         public  List<Category> Categories { get; set; }
         public double Price { get; set; }
         public List<Comment> Coments { get; set; }

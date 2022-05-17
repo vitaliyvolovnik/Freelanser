@@ -15,6 +15,5 @@ namespace Domain.Models
         public List<Review> Reviews { get; set; }
         public List<Skill> Skills { get; set; }
         public List<Work> ExecutedWorks { get; set; }
-
     }
 }

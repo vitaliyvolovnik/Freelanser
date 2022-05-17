@@ -26,6 +26,7 @@ namespace DLL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             ConfigureEmployee(modelBuilder.Entity<Employee>());
             ConfigureCustomer(modelBuilder.Entity<Customer>());
             ConfigureWork(modelBuilder.Entity<Work>());
@@ -54,7 +55,6 @@ namespace DLL.Context
         {
             builder.HasMany(x => x.Coments).WithOne(x => x.Work);
             builder.HasMany(x => x.Categories).WithMany(x => x.Works);
-
         }
         protected void ConfigureUserInfo(EntityTypeBuilder<UserInfo> builder)
         {
