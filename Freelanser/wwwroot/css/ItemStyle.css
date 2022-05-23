@@ -1,0 +1,39 @@
+﻿.MainCategoryList {
+    width: 80%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+    .MainCategoryList .CategoryDiv {
+        width: 20%;
+        margin-left: 0.6%;
+        margin-right: 0.6%;
+        margin-top: 2%;
+        padding: 10px;
+        min-width: 240px;
+        min-height: 50px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        font-family: 'Mulish', sans-serif;
+        background-color: #f4efe2;
+        border-radius: 10px 10px 10px 10px;
+        border: 3px solid #5b6b6a;
+        color: #6e7e70;
+    }

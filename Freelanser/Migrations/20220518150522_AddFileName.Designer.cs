@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Freelanser.Migrations
 {
     [DbContext(typeof(FreelanserContext))]
-    [Migration("20220517111059_Smigration")]
-    partial class Smigration
+    [Migration("20220518150522_AddFileName")]
+    partial class AddFileName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,9 @@ namespace Freelanser.Migrations
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImgPath")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsMainCategory")
                         .HasColumnType("bit");
@@ -153,6 +156,10 @@ namespace Freelanser.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -207,11 +214,16 @@ namespace Freelanser.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Skill");
                 });
@@ -269,10 +281,6 @@ namespace Freelanser.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
 
@@ -286,11 +294,14 @@ namespace Freelanser.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int?>("WorkerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("WorkerId");
 
                     b.ToTable("Works");
                 });
@@ -619,6 +630,13 @@ namespace Freelanser.Migrations
                     b.Navigation("Worker");
                 });
 
+            modelBuilder.Entity("Domain.Models.Skill", b =>
+                {
+                    b.HasOne("Domain.Models.Category", null)
+                        .WithMany("Skill")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("Domain.Models.UserInfo", b =>
                 {
                     b.HasOne("Domain.Models.User", "User")
@@ -640,9 +658,7 @@ namespace Freelanser.Migrations
 
                     b.HasOne("Domain.Models.Employee", "Worker")
                         .WithMany("ExecutedWorks")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkerId");
 
                     b.Navigation("Customer");
 
@@ -717,6 +733,8 @@ namespace Freelanser.Migrations
 
             modelBuilder.Entity("Domain.Models.Category", b =>
                 {
+                    b.Navigation("Skill");
+
                     b.Navigation("SubCategory");
                 });
 

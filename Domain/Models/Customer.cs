@@ -8,6 +8,11 @@ namespace Domain.Models
 {
     public class Customer
     {
+        public Customer()
+        {
+            Work = new List<Work>();
+            Reviews = new List<Review>();
+        }
         public int Id { get; set; }
         public string UserId { get; set; }
         public User User { get; set; } 

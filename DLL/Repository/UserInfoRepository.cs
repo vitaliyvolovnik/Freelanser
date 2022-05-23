@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace DLL.Repository
 {
-    internal class UserInfoRepository : BaseRepository<UserInfo>
+    public class UserInfoRepository : BaseRepository<UserInfo>
     {
         public UserInfoRepository(FreelanserContext context) : base(context)
         {

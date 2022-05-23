@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Freelanser.Migrations
 {
-    public partial class Fmigration : Migration
+    public partial class Fmigrawtion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,6 +57,8 @@ namespace Freelanser.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsMainCategory = table.Column<bool>(type: "bit", nullable: false),
+                    ImgPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -67,19 +69,6 @@ namespace Freelanser.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Skill",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Skill", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,27 +241,22 @@ namespace Freelanser.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EmployeeSkill",
+                name: "Skill",
                 columns: table => new
                 {
-                    EmployeesId = table.Column<int>(type: "int", nullable: false),
-                    SkillsID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EmployeeSkill", x => new { x.EmployeesId, x.SkillsID });
+                    table.PrimaryKey("PK_Skill", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_EmployeeSkill_Employees_EmployeesId",
-                        column: x => x.EmployeesId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeeSkill_Skill_SkillsID",
-                        column: x => x.SkillsID,
-                        principalTable: "Skill",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Skill_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -313,8 +297,9 @@ namespace Freelanser.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Context = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: false),
-                    WorkerId = table.Column<int>(type: "int", nullable: false),
+                    WorkerId = table.Column<int>(type: "int", nullable: true),
                     IsFinished = table.Column<bool>(type: "bit", nullable: false),
+                    IsPublicshed = table.Column<bool>(type: "bit", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -330,7 +315,30 @@ namespace Freelanser.Migrations
                         name: "FK_Works_Employees_WorkerId",
                         column: x => x.WorkerId,
                         principalTable: "Employees",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EmployeeSkill",
+                columns: table => new
+                {
+                    EmployeesId = table.Column<int>(type: "int", nullable: false),
+                    SkillsID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmployeeSkill", x => new { x.EmployeesId, x.SkillsID });
+                    table.ForeignKey(
+                        name: "FK_EmployeeSkill_Employees_EmployeesId",
+                        column: x => x.EmployeesId,
+                        principalTable: "Employees",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EmployeeSkill_Skill_SkillsID",
+                        column: x => x.SkillsID,
+                        principalTable: "Skill",
+                        principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -368,6 +376,7 @@ namespace Freelanser.Migrations
                     CreatedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     WorkId = table.Column<int>(type: "int", nullable: false),
+                    IsMainComment = table.Column<bool>(type: "bit", nullable: false),
                     CommentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -388,7 +397,7 @@ namespace Freelanser.Migrations
                         column: x => x.WorkId,
                         principalTable: "Works",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -507,6 +516,11 @@ namespace Freelanser.Migrations
                 column: "WorkerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Skill_CategoryId",
+                table: "Skill",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserInfos_UserId",
                 table: "UserInfos",
                 column: "UserId",
@@ -562,13 +576,13 @@ namespace Freelanser.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "Skill");
 
             migrationBuilder.DropTable(
                 name: "Works");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Customers");

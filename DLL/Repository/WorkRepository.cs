@@ -17,7 +17,8 @@ namespace DLL.Repository
             return await Entities
                 .Include(x => x.Files)
                 .Include(x => x.Coments)
-                .Include(x => x.Categories)
+                .Include(x => x.Category)
+                .Include(x => x.Skills)
                 .Where(predicat)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -34,7 +35,8 @@ namespace DLL.Repository
                 .ThenInclude(x => x.UserInfo)
                 .Include(x => x.Files)
                 .Include(x => x.Coments)
-                .Include(x => x.Categories)
+                .Include(x => x.Category)
+                .Include(x => x.Skills)
                 .Where(predicat)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -45,7 +47,8 @@ namespace DLL.Repository
             return await Entities
                 .Include(x => x.Files)
                 .Include(x => x.Coments)
-                .Include(x => x.Categories)
+                .Include(x => x.Category)
+                .Include(x => x.Skills)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -55,7 +58,8 @@ namespace DLL.Repository
             return await Entities
                 .Include(x => x.Files)
                 .Include(x => x.Coments)
-                .Include(x => x.Categories)
+                .Include(x => x.Category)
+                .Include(x=>x.Skills)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -66,7 +70,8 @@ namespace DLL.Repository
             var work = works.First();
             work.Files = NewWork.Files;
             work.Context = NewWork.Context;
-            work.Categories = NewWork.Categories;
+            work.Category = NewWork.Category;
+            work.Skills = NewWork.Skills;
             work.IsFinished = NewWork.IsFinished;
             work.Name = NewWork.Name;
             work.Price = NewWork.Price;

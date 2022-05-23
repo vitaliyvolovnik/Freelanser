@@ -25,7 +25,8 @@ namespace DLL.Repository
         {
             try
             {
-                await _entities.AddAsync(entity).ConfigureAwait(false);
+                await Entities.AddAsync(entity).ConfigureAwait(false);
+                await _context.SaveChangesAsync();
                 return new OperationDetail() { IsCompleted = true, Message = "Created" };
             }
             catch (Exception ex)

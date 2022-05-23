@@ -23,6 +23,13 @@ namespace BLL.Services
         => await _categoryRepository.CreateAsync(category);
         public Task<IReadOnlyCollection<Category>> FindByConditionAsync(Expression<Func<Category, bool>> prediacte)
         => _categoryRepository.FindByConditioAsync(prediacte);
+
+        public async Task<IReadOnlyCollection<Category>> FindByNameAsync(string name)
+        => await _categoryRepository.FindByConditioAsync(x=>x.Name==name);
+
+        public async Task<Category> FindParentCategoryAsync(string name)
+        => (await _categoryRepository.FindByConditioAsync(x => x.SubCategory.Any(y=>y.Name== name))).First();
+
         public async Task<IReadOnlyCollection<Category>> GetCategoriesAsync()
         {
            return await _categoryRepository.GetAllAsync();

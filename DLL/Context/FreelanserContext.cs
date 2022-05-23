@@ -54,7 +54,7 @@ namespace DLL.Context
         protected void ConfigureWork(EntityTypeBuilder<Work> builder)
         {
             builder.HasMany(x => x.Coments).WithOne(x => x.Work);
-            builder.HasMany(x => x.Categories).WithMany(x => x.Works);
+            builder.HasOne(x => x.Category).WithMany(x => x.Works);
         }
         protected void ConfigureUserInfo(EntityTypeBuilder<UserInfo> builder)
         {

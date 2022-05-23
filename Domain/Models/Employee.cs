@@ -8,6 +8,12 @@ namespace Domain.Models
 {
     public class Employee
     {
+        public Employee()
+        {
+            Reviews= new List<Review>();
+            Skills = new List<Skill>();
+            ExecutedWorks = new List<Work>();
+        }
         public int Id { get; set; }
         public double Rating { get; set; }
         public string UserId { get; set; }

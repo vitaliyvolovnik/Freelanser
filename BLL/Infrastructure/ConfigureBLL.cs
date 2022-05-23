@@ -1,4 +1,6 @@
-﻿using DLL.Context;
+﻿using BLL.Services;
+using DLL.Context;
+using DLL.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,30 @@ namespace BLL.Infrastructure
             serviceCollection.AddDbContext<FreelanserContext>(options =>
     options.UseSqlServer(ContectionString, b => b.MigrationsAssembly("Freelanser")));
             builder.AddEntityFrameworkStores<FreelanserContext>();
+
+
+            serviceCollection.AddTransient<CategoryRepository>();
+            serviceCollection.AddTransient<CommentRepository>();
+            serviceCollection.AddTransient<CustomerRepository>();
+            serviceCollection.AddTransient<EmployeeRepository>();
+            serviceCollection.AddTransient<FileRepository>();
+            serviceCollection.AddTransient<ReviewRepository>();
+            serviceCollection.AddTransient<SkillRepository>();
+            serviceCollection.AddTransient<UserInfoRepository>();
+            serviceCollection.AddTransient<UserRepository>();
+            serviceCollection.AddTransient<WorkRepository>();
+
+
+
+
+            serviceCollection.AddTransient<CategoryService>();
+            serviceCollection.AddTransient<SkillService>();
+            serviceCollection.AddTransient<UserService>();
+            serviceCollection.AddTransient<WorkService>();
+
+
+
+
         }
     }
 }

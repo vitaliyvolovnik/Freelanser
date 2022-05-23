@@ -1,8 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<Domain.Models.Category>
+
+@section ItStyle
+{
+<link rel="stylesheet" href="~/css/ItemStyle.css" asp-append-version="true" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="MainCategoryList">
+    @foreach(var item in Model)
+    {
+        <div class="CategoryDiv">
+            <div class="CategoryText">
+                @Html.ActionLink(item.Name,"WorkList","Work",new {Category=item.Name})
+            </div>
+        </div>
+    }
 </div>

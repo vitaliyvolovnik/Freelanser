@@ -31,9 +31,9 @@ namespace BLL.Services
         {
             return await _workRepository.GetAllAsync(); 
         }
-        public async Task<List<Work>> GetWorksByCategorysAsync(List<Category> categories)
+        public async Task<List<Work>> GetWorksByCategorysAsync(Category category)
         {
-            return (await _workRepository.FindByConditioWithUsersAsync(x=>x.Categories.Any(y=> categories.Any(z=>z.Name==y.Name)))).ToList();
+            return (await _workRepository.FindByConditioWithUsersAsync(x=>x.Category.Name==category.Name)).ToList();
         }
         public async Task<List<Work>> GetWorksWithUsersAsync()
         {

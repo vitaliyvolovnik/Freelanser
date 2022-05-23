@@ -13,7 +13,7 @@ namespace BLL.Services.Interfaces
 
         Task<IReadOnlyCollection<Work>> GetWorksAsync();
         Task<List<Work>> GetWorksWithUsersAsync();
-        Task<List<Work>> GetWorksByCategorysAsync(List<Category> categories);
+        Task<List<Work>> GetWorksByCategorysAsync(Category category);
         Task<IReadOnlyCollection<Work>> FindByConditionAsync(Expression<Func<Work, bool>> prediacte);
         Task<Work> GetWorkByIdAsync(int id);
         Task<bool> AddComentAsync(Comment comment, int WorkId);
