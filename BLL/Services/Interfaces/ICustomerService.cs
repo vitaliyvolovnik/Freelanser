@@ -16,5 +16,6 @@ namespace BLL.Services.Interfaces
         public Task<OperationDetail> PublishWorkAsync(Work work);
         public Task<bool> CanselWorkAsync(Customer customer,int workId);
         public Task ChangeWorkAsync(Work work,int oldId);
+        public Task<Customer> GetCstomerByIdAsync(int id);
     }
 }

@@ -1,0 +1,157 @@
+﻿.MainDiv {
+    width: 80%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    margin: 0 auto;
+    font-family: 'Mulish', sans-serif;
+    min-height: 100vh;
+}
+
+    .MainDiv .MenuList {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: end;
+        -ms-flex-align: end;
+        align-items: flex-end;
+        width: 20%;
+        border-right: 1px solid #adb5bd;
+        min-height: 100vh;
+        height: 100%;
+        padding-top: 30px;
+        padding-right: 20px;
+    }
+
+        .MainDiv .MenuList .menuItem {
+            margin-bottom: 15px;
+        }
+
+            .MainDiv .MenuList .menuItem .amenu {
+                font-family: 'Mulish', sans-serif;
+                font-size: 20px;
+                color: #45bf55;
+            }
+
+    .MainDiv .prof {
+        margin-left: 20px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        padding-top: 30px;
+        width: 75%;
+        height: 1000px;
+    }
+
+        .MainDiv .prof .Pitem {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 100%;
+            border-bottom: 1px solid #adb5bd;
+            padding-bottom: 20px;
+        }
+
+            .MainDiv .prof .Pitem .img {
+                width: 80px;
+                height: 80px;
+                background-color: red;
+                border-radius: 40px;
+            }
+
+            .MainDiv .prof .Pitem .mInt {
+                margin-left: 20px;
+            }
+
+                .MainDiv .prof .Pitem .mInt .name {
+                    font-weight: 600;
+                    font-size: 30px;
+                }
+
+                .MainDiv .prof .Pitem .mInt .email {
+                    font-size: 15px;
+                    margin: 2px;
+                    color: #adb5bd;
+                }
+
+            .MainDiv .prof .Pitem .Skills {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                width: 80%;
+                color: #42504d;
+            }
+
+                .MainDiv .prof .Pitem .Skills .SkillHeader {
+                    border-radius: 30px;
+                    padding-top: 2px;
+                    padding-bottom: 2px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    margin-top: 3px;
+                }
+
+                .MainDiv .prof .Pitem .Skills .Skill {
+                    background-color: #d5dbdb;
+                    margin: 3px;
+                    border-radius: 30px;
+                    padding-top: 2px;
+                    padding-bottom: 2px;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+        .MainDiv .prof .infitemList {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
+            .MainDiv .prof .infitemList .infItem {
+                width: 325px;
+                margin: 5px;
+                color: #adb5bd;
+            }
+
+                .MainDiv .prof .infitemList .infItem .type {
+                    font-weight: bold;
+                    color: #000;
+                }
+
+        .MainDiv .prof .SkillDiv {
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
+        .MainDiv .prof .AboutDiv {
+            display: block;
+            color: #adb5bd;
+            padding-right: 20%;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+

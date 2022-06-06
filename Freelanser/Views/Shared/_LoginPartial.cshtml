@@ -6,7 +6,8 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="HeaderItem" style="align-self:center">
-        <a asp-area="Identity" style="color:rgb(69, 191, 85);font-size: 20px;font-family: 'Mulish', sans-serif;" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        @Html.ActionLink($"Hello { @User.Identity?.Name}!","Index","office",null,new{title="Manage",style="color:rgb(69, 191, 85);font-size: 20px;font-family: 'Mulish', sans-serif;"})
+      
     </div>
     <div class="HeaderItem">
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">

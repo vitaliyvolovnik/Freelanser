@@ -9,6 +9,10 @@ a {
     text-decoration: none;
     color: inherit;
 }
+    a:hover {
+        text-decoration: none;
+        color: rgb(69, 191, 85);
+    }
 
 header {
     width: 100%;

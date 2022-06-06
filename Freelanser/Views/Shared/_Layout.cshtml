@@ -4,12 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Freelanser</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css?v=@DateTime.Now.Millisecond" />
     
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Freelanser.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/HeaderStyle.css" />
+    <link rel="stylesheet" href="~/css/site.css?v=@DateTime.Now.Millisecond" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Freelanser.styles.css?v=@DateTime.Now.Millisecond" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/HeaderStyle.css?v=@DateTime.Now.Millisecond" />
     @RenderSection("ItStyle",false)
+    @RenderSection("Regstyles",false)
+    @RenderSection("WorkList",false)
+    @RenderSection("Office",false)
+    @RenderSection("Work",false)
+    <link rel="stylesheet" href="~/css/RegisterRadioBtnStyle.css" asp-append-version="true" />
+    
 </head>
 <body>
     <header style="background-color: #232323;">
@@ -19,8 +25,8 @@
                     <div>Freelanser</div>
                 </div>
                 @Html.ActionLink("Home","Index","Home",null,new { @class="HeaderItem Home"})
-                @Html.ActionLink("Fint a Job","Index","Home",null,new { @class="HeaderItem Fint"})
-                @Html.ActionLink("Post a Job","Index","Home",null,new { @class="HeaderItem Post"})
+                @Html.ActionLink("Fint a Job","WorkList","Work",null,new { @class="HeaderItem Fint"})
+                @Html.ActionLink("Post a Job","AddWork","Work",null,new { @class="HeaderItem Post"})
                 @Html.ActionLink("About us","Index","Home",null,new { @class="HeaderItem About"})
                 
             </div>
@@ -44,5 +50,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @RenderSection("AddWScripts",false)
+    @RenderSection("WorkListScript",false)
+    @RenderSection("CommentScript",false)
+    @RenderSection("EditScript",false)
 </body>
 </html>

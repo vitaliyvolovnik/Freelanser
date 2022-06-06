@@ -15,6 +15,7 @@ namespace DLL.Repository
         {
             return await Entities
                 .Include(x => x.SubCategory)
+                .Include(x => x.Skill)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -23,8 +24,19 @@ namespace DLL.Repository
             return await Entities
                 .Include(x => x.SubCategory)
                 .Where(predicat)
+                .Include(x=>x.Skill)
                 .ToListAsync()
                 .ConfigureAwait(false);
+        }
+        public async Task AddSubCategory(int id, List<Category> subCategories)
+        {
+            var category = Entities.Find(id);
+            foreach (var item in subCategories)
+                category.SubCategory.Add(item);
+
+
+            _context.Entry(category).State = EntityState.Modified;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

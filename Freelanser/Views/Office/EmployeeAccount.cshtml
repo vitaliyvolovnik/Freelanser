@@ -1,0 +1,88 @@
+﻿@model Domain.Models.Employee
+
+@{
+    ViewData["Title"] = "EmployeeAccount";
+}
+@section Office{
+    <link rel="stylesheet" href="~/css/officeStylet.css" />
+}
+<div class="MainDiv">
+        <div class="MenuList">
+            <div class="menuItem">
+                @Html.ActionLink("Profile","index","office",null,new {@class = "amenu"})
+                
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Edit","EditInfo","office",null,new {@class = "amenu"})
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Reviues","index","office",null,new {@class = "amenu"})
+            </div>
+            <div class="menuItem">
+                
+                @Html.ActionLink("Finished works","Works","office",new {isFinished = true},new {@class = "amenu"})
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Current works","Works","office",new {isFinished = false},new {@class = "amenu"})
+            </div>
+        </div>
+        <div class="prof">
+            <div class="Pitem">
+                @if(!string.IsNullOrWhiteSpace(Model.User.UserInfo.PhotoPath)){
+                    <div class="img" style="background-size: cover;background-image: url(@Model.User.UserInfo.PhotoPath);">
+
+                    </div>
+                }
+                <div class="mInt">
+                    <div class="name">@Model.User.UserInfo.Name @Model.User.UserInfo.Surname</div>
+                    <div class="email">
+                        @Model.User.Email
+                    </div>
+                </div>
+            </div>
+            <div class="Pitem infitemList">
+                <div class="infItem">
+                   <span class="type">email:</span> @Model.User.Email
+                </div>
+                <div class="infItem">
+                    <span class="type">nummber:</span> @Model.User.UserInfo.Phone
+                </div>
+                <div class="infItem">
+                    <span class="type">account:</span> @Model.User.UserInfo.Account
+                </div>
+                <div class="infItem">
+                    <span class="type">rating:</span> @Model.Rating
+                </div>
+                <div class="infItem">
+                    <span class="type">count of finished work:</span> @Model.ExecutedWorks.Where(x=>x.IsFinished).Count()
+                </div>
+                <div class="infItem">
+                    <span class="type">count of Current work:</span> @Model.ExecutedWorks.Where(x=>!x.IsFinished).Count()
+                </div>
+            </div>
+            @if (Model.Skills.Count > 0)
+            {
+                <div class="Pitem SkillDiv">
+                <div class="Skills">
+                    <div class="SkillHeader">
+                        Skills:
+                    </div>
+                    @foreach (var item in Model.Skills)
+                    {
+                        <div class="Skill">
+                            @item.Name
+                        </div>
+                    }
+                </div>
+                </div>
+            }
+            
+           @if (!string.IsNullOrWhiteSpace(Model.User.UserInfo.Information))
+            {
+                <div class="Pitem AboutDiv">
+                    <b style="color: #000;">About me:</b>@Model.User.UserInfo.Information
+                </div>
+            }
+        </div>
+</div>
+

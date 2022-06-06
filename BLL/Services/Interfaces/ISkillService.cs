@@ -14,5 +14,6 @@ namespace BLL.Services.Interfaces
         Task<List<Skill>> GetSkillsWithWorkerAsync();
         Task<bool> AddSkillAsync(Skill skill);
         Task<IReadOnlyCollection<Skill>> FindByConditionAsync(Expression<Func<Skill, bool>> prediacte);
+        Task<IReadOnlyCollection<Skill>> GetSkillsbyNamesAsync(List<string> Skillname);
     }
 }

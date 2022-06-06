@@ -1,0 +1,64 @@
+﻿@model Domain.Models.User
+
+@{
+    ViewData["Title"] = "Works";
+}
+@section Office{
+    <link rel="stylesheet" href="~/css/officeStylet.css" />
+    <link rel="stylesheet" href="~/css/ProfileWork.css" />
+}
+<div class="MainDiv">
+        <div class="MenuList">
+           <div class="menuItem">
+                @Html.ActionLink("Profile","index","office",null,new {@class = "amenu"})
+                
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Edit","EditInfo","office",null,new {@class = "amenu"})
+            </div>
+            @if (Model.IsWorker)
+            {
+            <div class="menuItem">
+                @Html.ActionLink("Reviues","index","office",null,new {@class = "amenu"})
+            </div>
+            }
+            <div class="menuItem">
+               
+                @Html.ActionLink("Finished works","Works","office",new {isFinished = true},new {@class = "amenu"})
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Current works","Works","office",new {isFinished = false},new {@class = "amenu"})
+            </div>
+        </div>
+        <div class="WorksList">
+        @foreach(var item in (Model.IsWorker)?Model.Employee.ExecutedWorks:Model.Customer.Work)
+        {
+            <div class="WItem ">
+                <div class="HeaderAndPrice ">
+                    <div class="Header">
+                        @Html.ActionLink(@item.Name,"WorkPage","Work",new {Id=item.Id})
+                    </div>
+                    <div class="Price" align="right">
+                        @item.Price$    
+                    </div>
+                </div>
+                <div class="description">
+                   @item.Context
+                </div>    
+                <div class="Skills">
+                     <div class="SkillHeader">
+                        Skills:
+                    </div>
+                    @if(item.Skills!=null)
+                    @foreach (var skill in item.Skills)
+                    {
+                        <div class="Skill">
+                        @skill.Name
+                        </div>
+                    }
+                </div>         
+            </div>
+        }
+            
+        </div>
+    </div>

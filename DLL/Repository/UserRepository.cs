@@ -17,6 +17,7 @@ namespace DLL.Repository
             return await Entities
                 .Include(x => x.Customer)
                 .Include(x => x.Employee)
+                .ThenInclude(x => x.Skills)
                 .Include(x => x.UserInfo)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -26,10 +27,26 @@ namespace DLL.Repository
             return await Entities
                .Include(x => x.Customer)
                .Include(x => x.Employee)
+               .ThenInclude(x=>x.Skills)
                .Include(x => x.UserInfo)
                .Where(predicat)
                .ToListAsync()
                .ConfigureAwait(false);
         }
+        public  async Task<IReadOnlyCollection<User>> FindByConditioWithWorksAsync(Expression<Func<User, bool>> predicat)
+        {
+            return await Entities
+               .Include(x => x.Customer)
+               .ThenInclude(x=>x.Work)
+               .Include(x => x.Employee)
+               .ThenInclude(x => x.Skills)
+               .Include(x=>x.Employee)
+               .ThenInclude(x=>x.ExecutedWorks)
+               .Include(x => x.UserInfo)
+               .Where(predicat)
+               .ToListAsync()
+               .ConfigureAwait(false);
+        }
+
     }
 }

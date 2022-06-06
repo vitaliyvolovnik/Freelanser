@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Freelanser.Migrations
 {
-    public partial class Fmigrawtion : Migration
+    public partial class AzureDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -225,6 +225,7 @@ namespace Freelanser.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Account = table.Column<double>(type: "float", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Information = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
@@ -300,11 +301,22 @@ namespace Freelanser.Migrations
                     WorkerId = table.Column<int>(type: "int", nullable: true),
                     IsFinished = table.Column<bool>(type: "bit", nullable: false),
                     IsPublicshed = table.Column<bool>(type: "bit", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Validation = table.Column<int>(type: "int", nullable: false),
+                    TypeOfPayment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Finish = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Works", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Works_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Works_Customers_CustomerId",
                         column: x => x.CustomerId,
@@ -343,30 +355,6 @@ namespace Freelanser.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CategoryWork",
-                columns: table => new
-                {
-                    CategoriesId = table.Column<int>(type: "int", nullable: false),
-                    WorksId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoryWork", x => new { x.CategoriesId, x.WorksId });
-                    table.ForeignKey(
-                        name: "FK_CategoryWork_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CategoryWork_Works_WorksId",
-                        column: x => x.WorksId,
-                        principalTable: "Works",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comments",
                 columns: table => new
                 {
@@ -397,7 +385,7 @@ namespace Freelanser.Migrations
                         column: x => x.WorkId,
                         principalTable: "Works",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -406,6 +394,7 @@ namespace Freelanser.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WorkId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -417,6 +406,30 @@ namespace Freelanser.Migrations
                         column: x => x.WorkId,
                         principalTable: "Works",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SkillWork",
+                columns: table => new
+                {
+                    SkillsID = table.Column<int>(type: "int", nullable: false),
+                    WorksId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SkillWork", x => new { x.SkillsID, x.WorksId });
+                    table.ForeignKey(
+                        name: "FK_SkillWork_Skill_SkillsID",
+                        column: x => x.SkillsID,
+                        principalTable: "Skill",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SkillWork_Works_WorksId",
+                        column: x => x.WorksId,
+                        principalTable: "Works",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -462,11 +475,6 @@ namespace Freelanser.Migrations
                 name: "IX_Categories_CategoryId",
                 table: "Categories",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CategoryWork_WorksId",
-                table: "CategoryWork",
-                column: "WorksId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_CommentId",
@@ -521,10 +529,20 @@ namespace Freelanser.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SkillWork_WorksId",
+                table: "SkillWork",
+                column: "WorksId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserInfos_UserId",
                 table: "UserInfos",
                 column: "UserId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Works_CategoryId",
+                table: "Works",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Works_CustomerId",
@@ -555,9 +573,6 @@ namespace Freelanser.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CategoryWork");
-
-            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -568,6 +583,9 @@ namespace Freelanser.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reviews");
+
+            migrationBuilder.DropTable(
+                name: "SkillWork");
 
             migrationBuilder.DropTable(
                 name: "UserInfos");

@@ -1,4 +1,6 @@
-﻿namespace Domain.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Domain.Models
 {
     public class Work
     {
@@ -20,5 +22,16 @@
         public double Price { get; set; }
         public List<Comment> Coments { get; set; }
         public List<File> Files { get; set; }
+        public ValidateState Validation { get; set; }
+        public string TypeOfPayment { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Finish { get; set; }
+
+    }
+    public enum ValidateState
+    {
+        IsValid,
+        IsCanseled,
+        IsInQueue,
     }
 }

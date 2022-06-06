@@ -21,6 +21,10 @@ namespace BLL.Services
 
         public async Task<OperationDetail> AddCategoryAsync(Category category)
         => await _categoryRepository.CreateAsync(category);
+
+        public async Task AddSubCategory(int categoryId, List<Category> SubCategories)
+        =>await _categoryRepository.AddSubCategory(categoryId, SubCategories);
+
         public Task<IReadOnlyCollection<Category>> FindByConditionAsync(Expression<Func<Category, bool>> prediacte)
         => _categoryRepository.FindByConditioAsync(prediacte);
 

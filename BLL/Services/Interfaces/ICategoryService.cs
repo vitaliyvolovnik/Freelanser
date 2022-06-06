@@ -16,5 +16,6 @@ namespace BLL.Services.Interfaces
         Task<IReadOnlyCollection<Category>> FindByNameAsync(string name);
         Task<Category> FindParentCategoryAsync(string name);
         Task<OperationDetail> AddCategoryAsync(Category category);
+        Task AddSubCategory(int categoryId,List<Category> SubCategories);
     }
 }

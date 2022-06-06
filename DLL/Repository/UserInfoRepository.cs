@@ -26,5 +26,15 @@ namespace DLL.Repository
                 .ToArrayAsync()
                 .ConfigureAwait(false);
         }
+        public async Task ChangePhoto(int id, string path)
+        {
+            var user = await Entities.FindAsync(id);
+            if (user == null) return;
+            user.PhotoPath = path;
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+
+        }
     }
 }

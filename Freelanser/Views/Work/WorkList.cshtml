@@ -4,8 +4,105 @@
     ViewData["Title"] = "WorkList";
 }
 
-<h1>WorkList</h1>
+@section WorkList{
+    <link rel="stylesheet" href="~/css/WorkListStyle.css" />
+}
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="MainDiv">
+        <div class="Categories">
+        @foreach(var item in Model.Categories)
+        {   
+            <div class="Item MainCategory"> 
+                @Html.ActionLink(item.Name,"WorkList","Work",new {Category = item.Name})
+            </div>
+            @if(Model.CurrentMainCategory!=null)
+            @if (item.Name == Model.CurrentMainCategory.Name)
+            {
+              
+                @foreach(var Sitem in Model.CurrentMainCategory.SubCategory){
+                   <div class="Item SubCategory">
+                        @Html.ActionLink(Sitem.Name,"WorkList","Work",new {Category = Sitem.Name})
+                        @if(Model.CurrentCategory!=null)
+                        {
+                            @if (Sitem.Name == Model.CurrentCategory.Name)
+                            {
+                                @foreach (var Skill in Model.CurrentCategory.Skill)
+                                {
+                                    <div class="chekBDiv">
+                                        <input type="checkbox" class="custom-checkbox" id="@Skill.Name.Replace("+", "Q").Replace(" ","Q").Replace("#", "Q").Replace("&", "Q")" name="happy" value="yes">
+                                        <label for="@Skill.Name.Replace("+", "Q").Replace("#", "Q").Replace("&", "Q").Replace(" ","Q")">@Skill.Name</label>
+                                    </div>
+                                } 
+                            }
+                        }
+                    </div>
+               }   
+            }
+        }
+        </div>
+        <div class="WorksList"> 
+        @foreach(var item in Model.Works)
+        {
+            string str = "";
+            foreach(var skill in item.Skills)
+            {
+                str += " " + skill.Name.Replace("+", "Q").Replace("#", "Q").Replace("&", "Q").Replace(" ","Q");
+            }
+            <div class="WItem @str">
+                <div class="HeaderAndPrice ">
+                    <div class="Header">
+                        @Html.ActionLink(@item.Name,"WorkPage","Work",new {Id=item.Id})
+                    </div>
+                    <div class="Price" align="right">
+                        @item.Price$    
+                    </div>
+                </div>
+                <div class="description">
+                   @item.Context
+                </div>    
+                <div class="Skills">
+                     <div class="SkillHeader">
+                        Skills:
+                    </div>
+                    @if(item.Skills!=null)
+                    @foreach (var skill in item.Skills)
+                    {
+                        <div class="Skill">
+                        @skill.Name
+                        </div>
+                    }
+                </div>         
+            </div>
+        }
+        
+
+           
+        </div>
+    </div>
+
+@section WorkListScript
+{<script>
+   var fileterlist = new Map();
+        $(document).ready(function(){
+            $(":checkbox").change(function(e){
+                var value =  e.target.id;
+                fileterlist.set(value,e.target.checked);
+                ff();
+            })
+        })
+
+        function ff(){
+            $(".WItem").css("display","none");
+            var t= true;
+            for (let pair of fileterlist.entries()) {
+                if(pair[1]){
+                    $(".".concat(pair[0])).css("display","block");
+                    t=false;
+                    
+                }
+            }
+            if(t) {
+                $(".WItem").css("display","block");
+            }
+        }
+</script>}

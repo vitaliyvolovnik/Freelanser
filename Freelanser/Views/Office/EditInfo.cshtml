@@ -1,0 +1,107 @@
+﻿@model Freelanser.Models.EditViewModel
+
+@{
+    ViewData["Title"] = "EditInfo";
+}
+
+@section Office{
+    <link rel="stylesheet" href="~/css/officeStylet.css" />
+}
+<div class="MainDiv">
+        <div class="MenuList">
+            <div class="menuItem">
+                @Html.ActionLink("Profile","index","office",null,new {@class = "amenu"})
+                
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Edit","EditInfo","office",null,new {@class = "amenu"})
+            </div>
+            @if (Model.Categories != null)
+            {
+            <div class="menuItem">
+                @Html.ActionLink("Reviues","index","office",null,new {@class = "amenu"})
+            </div>
+            }
+            <div class="menuItem">
+                @Html.ActionLink("Finished works","Works","office",new {isFinished = true},new {@class = "amenu"})
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Current works","Works","office",new {isFinished = false},new {@class = "amenu"})
+            </div>
+        </div>
+        <div class="prof">
+            <div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditInfo">
+            
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+               
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="Information" class="control-label"></label>
+                <textarea asp-for="Information"  class="form-control" ></textarea>
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="SkillsStr"  class="control-label"></label>
+                <input asp-for="SkillsStr" id="SkillsStr" class="form-control" />
+                
+                
+            </div>
+                    @if (Model.Categories != null)
+                    {
+                        <div class="form-group">
+                            <select name="CategoryName" id="CategoryName" > 
+                                @foreach (var item in Model.Categories)
+                                {
+                                    if (!item.IsMainCategory)
+                                    {
+                                        <option value="@item.Name" id="myselect" name="CategoryName" class="CategorySelect">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <table id="tblFruits">
+                                @foreach (var item in Model.Categories)
+                                {
+                                    int i = 0;
+                                    @foreach (var skill in item.Skill)
+                                    {
+                                        string Id = $"chk{i}";
+                                        <tr>
+                                            <td class="opt @item.Name.Replace(" ","_").Replace("&","_")">
+                                                <input id=@Id class="opt1 @item.Name.Replace(" ","_").Replace("&","_")" type="checkbox" @(Model.SkillsStr.Contains(@skill.Name))? "(checked="checked")":"" value="@skill.Name" />
+                                                <label for="@Id">@skill.Name</label>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table
+                        </div>
+                    }
+                    <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+        </div>
+</div>
+
+
+@section EditScript {
+    <script src="~/js/EditInf.js"></script>
+}

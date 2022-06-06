@@ -30,7 +30,10 @@ namespace BLL.Services
             var oper=await _skillRepository.CreateAsync(skill);
             return oper.IsCompleted;
         }
-
+        public async Task<IReadOnlyCollection<Skill>> GetSkillsbyNamesAsync(List<string> Skillname)
+        {
+            return await _skillRepository.FindByConditioAsync(x=> Skillname.Contains(x.Name));
+        }
         public Task<IReadOnlyCollection<Skill>> FindByConditionAsync(Expression<Func<Skill, bool>> prediacte)
         => _skillRepository.FindByConditioAsync(prediacte);
     }

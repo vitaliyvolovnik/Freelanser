@@ -17,5 +17,6 @@ namespace BLL.Services.Interfaces
         Task<IReadOnlyCollection<Work>> FindByConditionAsync(Expression<Func<Work, bool>> prediacte);
         Task<Work> GetWorkByIdAsync(int id);
         Task<bool> AddComentAsync(Comment comment, int WorkId);
+        Task<List<Work>> GetWorksByValidStateAsync(ValidateState state);
     }
 }

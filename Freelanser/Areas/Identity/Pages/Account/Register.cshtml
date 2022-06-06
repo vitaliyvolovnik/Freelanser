@@ -1,0 +1,307 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+@section Regstyles{
+
+    
+    <link rel="stylesheet" href="~/css/RegisterStyle.css" asp-append-version="true" />
+    
+}
+
+<div class="BodyDiv">
+        <div class="container1">
+            Signup Form
+            <div class="progress-bar1">
+                <div class="step">
+                    <p>
+                        Name
+                    </p>
+                    <div class="bullet">
+                        <span>1</span>
+                    </div>
+                    <div class="check fas fa-check"></div>
+                </div>
+                <div class="step">
+                    <p>
+                        Contact
+                    </p>
+                    <div class="bullet">
+                        <span>2</span>
+                    </div>
+                    <div class="check fas fa-check"></div>
+                </div>
+                <div class="step">
+                    <p>
+                        Type
+                    </p>
+                    <div class="bullet">
+                        <span>3</span>
+                    </div>
+                    <div class="check fas fa-check"></div>
+                </div>
+                <div class="step">
+                    <p>
+                        Submit
+                    </p>
+                    <div class="bullet">
+                        <span>4</span>
+                    </div>
+                    <div class="check fas fa-check"></div>
+                </div>
+            </div>
+            <div class="form-outer">
+            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div class="page slide-page">
+                    <div class="title">
+                        Basic Info:
+                    </div>
+                    <div class="field" >
+                        <div class="label" >
+                            First Name
+                        </div>
+                        <input asp-for="Input.Name" class="form-control" style="width:295px;" autocomplete="off" aria-required="true" /> 
+                        <div >
+                            <span asp-validation-for="Input.Name" class="text-danger"></span>
+                        </div>
+                        
+                    </div>
+                    <div class="field" >
+                        <div class="label" >
+                            First Name
+                        </div>
+                        <input asp-for="Input.Surname" class="form-control" style="width:295px;" autocomplete="off" aria-required="true" /> 
+                        <div >
+                            <span asp-validation-for="Input.Surname" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="fieldBtn">
+                        <button class="firstNext next">Next</button>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="title">
+                        Contact Info:
+                    </div>
+                    <div class="field" >
+                        <div class="label" >
+                            Email address
+                        </div>
+                        <input asp-for="Input.Email" class="form-control" style="width:295px;" autocomplete="username" aria-required="true" /> 
+                        <div >
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+                        
+                    </div>
+                    <div class="field" >
+                        <div class="label" >
+                            Number
+                        </div>
+                        <input asp-for="Input.Number" class="form-control" style="width:295px;" autocomplete="off" aria-required="true" /> 
+                        <div >
+                            <span asp-validation-for="Input.Number" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="fieldBtn btns">
+                        <button class="prev-1 prev">Previous</button>
+                        <button class="next-1 next">Next</button>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="title">
+                        Account type:
+                    </div>
+                    <div class="field">
+                        <div class="radio">
+                            @Html.RadioButtonFor(x=>x.Input.UserWorkRole,"Employee account",new{id="radio-1"})
+                            <label for="radio-1" class="radio-label">Employee account</label>
+                        </div>                    
+                    </div>
+                    <div class="field">
+                        <div class="radio">
+                            @Html.RadioButtonFor(x=>x.Input.UserWorkRole,"Customer account",new{id="radio-2"})
+                            <label  for="radio-2" class="radio-label">Customer account</label>
+                        </div>
+                    </div>
+                    <div class="fieldBtn btns">
+                        <button class="prev-2 prev">Previous</button>
+                        <button class="next-2 next">Next</button>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="title">
+                        Password:
+                    </div>
+                    <div class="field" >
+                        <div class="label" >
+                            Password
+                        </div>
+                        <input asp-for="Input.Password" class="form-control" style="width:295px;" autocomplete="username" aria-required="true" /> 
+                        <div >
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+                        
+                    </div>
+                    <div class="field" >
+                        <div class="label" >
+                            Confirm password
+                        </div>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" style="width:295px;" autocomplete="off" aria-required="true" /> 
+                        <div >
+                            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="fieldBtn btns">
+                        <button class="prev-3 prev">Previous</button>
+                        <button class="submit">Sign in</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+@*<div class="row">
+    <div class="col-md-4">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2>Create a new account.</h2>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                <label asp-for="Input.Email"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.Password"></label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                <label asp-for="Input.ConfirmPassword"></label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+               
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.Surname" class="form-control" aria-required="true" />
+                <label asp-for="Input.Surname"></label>
+                <span asp-validation-for="Input.Surname" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.information" class="form-control" aria-required="true" />
+                <label asp-for="Input.information"></label>
+                <span asp-validation-for="Input.information" class="text-danger"></span>
+            </div>
+            <div class="form-floating">
+               @Html.RadioButtonFor(x => x.Input.UserWorkRole,"Customer") Customer 
+            </div>
+             <div class="form-floating">
+                @Html.RadioButtonFor(x => x.Input.UserWorkRole,"Employee") Employee
+            </div>
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+        </form>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to register.</h3>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
+                            about setting up this ASP.NET application to support logging in via external services</a>.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>*@
+<script>
+    const slidePage = document.querySelector(".slide-page");
+const nextBtnFirst = document.querySelector(".firstNext");
+const prevBtnSec = document.querySelector(".prev-1");
+const nextBtnSec = document.querySelector(".next-1");
+const prevBtnThird = document.querySelector(".prev-2");
+const nextBtnThird = document.querySelector(".next-2");
+const prevBtnFourth = document.querySelector(".prev-3");
+const submitBtn = document.querySelector(".submit");
+const progressText = document.querySelectorAll(".step p");
+const progressCheck = document.querySelectorAll(".step .check");
+const bullet = document.querySelectorAll(".step .bullet");
+let current = 1;
+nextBtnFirst.addEventListener("click", function (event) {
+    event.preventDefault();
+    slidePage.style.marginLeft = "-25%";
+    bullet[current - 1].classList.add("active");
+    progressCheck[current - 1].classList.add("active");
+    progressText[current - 1].classList.add("active");
+    current += 1;
+});
+nextBtnSec.addEventListener("click", function (event) {
+    event.preventDefault();
+    slidePage.style.marginLeft = "-50%";
+    bullet[current - 1].classList.add("active");
+    progressCheck[current - 1].classList.add("active");
+    progressText[current - 1].classList.add("active");
+    current += 1;
+});
+nextBtnThird.addEventListener("click", function (event) {
+    event.preventDefault();
+    slidePage.style.marginLeft = "-75%";
+    bullet[current - 1].classList.add("active");
+    progressCheck[current - 1].classList.add("active");
+    progressText[current - 1].classList.add("active");
+    current += 1;
+});
+
+prevBtnSec.addEventListener("click", function (event) {
+    event.preventDefault();
+    slidePage.style.marginLeft = "0%";
+    bullet[current - 2].classList.remove("active");
+    progressCheck[current - 2].classList.remove("active");
+    progressText[current - 2].classList.remove("active");
+    current -= 1;
+});
+prevBtnThird.addEventListener("click", function (event) {
+    event.preventDefault();
+    slidePage.style.marginLeft = "-25%";
+    bullet[current - 2].classList.remove("active");
+    progressCheck[current - 2].classList.remove("active");
+    progressText[current - 2].classList.remove("active");
+    current -= 1;
+});
+prevBtnFourth.addEventListener("click", function (event) {
+    event.preventDefault();
+    slidePage.style.marginLeft = "-50%";
+    bullet[current - 2].classList.remove("active");
+    progressCheck[current - 2].classList.remove("active");
+    progressText[current - 2].classList.remove("active");
+    current -= 1;
+});
+</script>
+@section Scripts {
+    <script src="js/Reg.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    
+}

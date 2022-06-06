@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public string Surname { get; set; }
         public double Account { get; set; }
+        public string? Phone { get; set; }
         public string PhotoPath { get;set; }
         //public DateTime RegisterTime { get; set; }
         public string? Information { get; set; }

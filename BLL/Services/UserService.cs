@@ -11,19 +11,25 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService : ICustomerService, IEmployeeService
+    public class UserService : ICustomerService, IEmployeeService, IUserService,IUserInfoService
     {
         private readonly EmployeeRepository _employeeRepository;
         private readonly CustomerRepository _customerRepository;
-        //private readonly UserRepository _userRepository;
+        private readonly UserRepository _userRepository;
         private readonly WorkRepository _workRepository;
+        private readonly UserInfoRepository _userInfoRepository;
 
-        public UserService(EmployeeRepository employeeRepository, CustomerRepository customerRepository, WorkRepository workRepository)
+        public UserService(EmployeeRepository employeeRepository, 
+            CustomerRepository customerRepository, 
+            UserRepository userRepository, 
+            WorkRepository workRepository,
+            UserInfoRepository userInfoRepository)
         {
             this._employeeRepository = employeeRepository;
             this._customerRepository = customerRepository;
-            //this._userRepository = userRepository;
+            this._userRepository = userRepository;
             this._workRepository = workRepository;
+            this._userInfoRepository = userInfoRepository;
         }
 
         public async Task<bool> CanselWorkAsync(Customer customer, int workId)
@@ -32,7 +38,7 @@ namespace BLL.Services
 
         }
         public async Task ChangeWorkAsync(Work work, int oldId)
-        =>await _workRepository.UpdateAsync(oldId, work); 
+        => await _workRepository.UpdateAsync(oldId, work);
         public async Task<IReadOnlyCollection<Customer>> FindByCustomerConditiomAsync(Expression<Func<Customer, bool>> prediacte)
         => await _customerRepository.FindByConditioAsync(prediacte);
         public async Task<IReadOnlyCollection<Employee>> FindEmployeeByConditiomAsync(Expression<Func<Employee, bool>> prediacte)
@@ -52,7 +58,20 @@ namespace BLL.Services
         }
         public async Task<bool> TakeWorkAsync(int employeeId, int workId)
         {
-            return await _workRepository.TakeWork(workId, employeeId); 
+            return await _workRepository.TakeWork(workId, employeeId);
         }
+        public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
+        => (await this._employeeRepository.FindByConditioAsync(x => x.Id == employeeId))?.First();
+        public async Task<User> GetUserByEmailAsync(string email)
+       => (await this._userRepository.FindByConditioAsync(x => x.Email == email))?.First();
+        public async Task<Customer> GetCstomerByIdAsync(int id)
+        => (await this._customerRepository.FindByConditioAsync(x => x.Id == id))?.First();
+        public async Task ChangePhotoAsync(int userinfoId, string path)
+        {
+            await this._userInfoRepository.ChangePhoto(userinfoId, path);
+        }
+        public async Task<User> GetUserByEmailWithWorksAsync(string email)
+        => (await this._userRepository.FindByConditioWithWorksAsync(x => x.Email == email))?.First();
     }
+    
 }

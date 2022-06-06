@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Freelanser.Migrations
 {
     [DbContext(typeof(FreelanserContext))]
-    [Migration("20220522085632_ChangeWork")]
-    partial class ChangeWork
+    [Migration("20220604160449_changeUser")]
+    partial class changeUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -206,14 +206,9 @@ namespace Freelanser.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WorkId")
-                        .HasColumnType("int");
-
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("WorkId");
 
                     b.ToTable("Skill");
                 });
@@ -234,6 +229,9 @@ namespace Freelanser.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoPath")
@@ -271,8 +269,14 @@ namespace Freelanser.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Finish")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
@@ -286,6 +290,13 @@ namespace Freelanser.Migrations
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<string>("TypeOfPayment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Validation")
+                        .HasColumnType("int");
 
                     b.Property<int?>("WorkerId")
                         .HasColumnType("int");
@@ -524,6 +535,21 @@ namespace Freelanser.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SkillWork", b =>
+                {
+                    b.Property<int>("SkillsID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorksId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SkillsID", "WorksId");
+
+                    b.HasIndex("WorksId");
+
+                    b.ToTable("SkillWork");
+                });
+
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -615,10 +641,6 @@ namespace Freelanser.Migrations
                     b.HasOne("Domain.Models.Category", null)
                         .WithMany("Skill")
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("Domain.Models.Work", null)
-                        .WithMany("Skills")
-                        .HasForeignKey("WorkId");
                 });
 
             modelBuilder.Entity("Domain.Models.UserInfo", b =>
@@ -723,6 +745,21 @@ namespace Freelanser.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SkillWork", b =>
+                {
+                    b.HasOne("Domain.Models.Skill", null)
+                        .WithMany()
+                        .HasForeignKey("SkillsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Work", null)
+                        .WithMany()
+                        .HasForeignKey("WorksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Models.Category", b =>
                 {
                     b.Navigation("Skill");
@@ -756,8 +793,6 @@ namespace Freelanser.Migrations
                     b.Navigation("Coments");
 
                     b.Navigation("Files");
-
-                    b.Navigation("Skills");
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>

@@ -2,17 +2,22 @@ using BLL.Infrastructure;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using DLL.Context;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Freelanser;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+builder.Host.UseSerilog((hostingContext, services, configuration) => { configuration.WriteTo.File(builder.Environment.WebRootPath + "/Log.txt"); });
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var t = builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true);
 ConfigureBLL.Configure(builder.Services, connectionString,t );
-
+builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

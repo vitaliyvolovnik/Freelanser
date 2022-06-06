@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Freelanser.Migrations
 {
     [DbContext(typeof(FreelanserContext))]
-    [Migration("20220518150522_AddFileName")]
-    partial class AddFileName
+    [Migration("20220602180711_AzureDB")]
+    partial class AzureDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace Freelanser.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CategoryWork", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WorksId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesId", "WorksId");
-
-                    b.HasIndex("WorksId");
-
-                    b.ToTable("CategoryWork");
-                });
 
             modelBuilder.Entity("Domain.Models.Category", b =>
                 {
@@ -246,6 +231,9 @@ namespace Freelanser.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhotoPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -274,12 +262,21 @@ namespace Freelanser.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Context")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Finish")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsFinished")
                         .HasColumnType("bit");
@@ -294,10 +291,19 @@ namespace Freelanser.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<string>("TypeOfPayment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Validation")
+                        .HasColumnType("int");
+
                     b.Property<int?>("WorkerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("CustomerId");
 
@@ -529,6 +535,21 @@ namespace Freelanser.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SkillWork", b =>
+                {
+                    b.Property<int>("SkillsID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorksId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SkillsID", "WorksId");
+
+                    b.HasIndex("WorksId");
+
+                    b.ToTable("SkillWork");
+                });
+
             modelBuilder.Entity("Domain.Models.User", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -537,21 +558,6 @@ namespace Freelanser.Migrations
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("User");
-                });
-
-            modelBuilder.Entity("CategoryWork", b =>
-                {
-                    b.HasOne("Domain.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.Work", null)
-                        .WithMany()
-                        .HasForeignKey("WorksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Models.Category", b =>
@@ -650,6 +656,12 @@ namespace Freelanser.Migrations
 
             modelBuilder.Entity("Domain.Models.Work", b =>
                 {
+                    b.HasOne("Domain.Models.Category", "Category")
+                        .WithMany("Works")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.Customer", "Customer")
                         .WithMany("Work")
                         .HasForeignKey("CustomerId")
@@ -659,6 +671,8 @@ namespace Freelanser.Migrations
                     b.HasOne("Domain.Models.Employee", "Worker")
                         .WithMany("ExecutedWorks")
                         .HasForeignKey("WorkerId");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Customer");
 
@@ -731,11 +745,28 @@ namespace Freelanser.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SkillWork", b =>
+                {
+                    b.HasOne("Domain.Models.Skill", null)
+                        .WithMany()
+                        .HasForeignKey("SkillsID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Work", null)
+                        .WithMany()
+                        .HasForeignKey("WorksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Models.Category", b =>
                 {
                     b.Navigation("Skill");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("Works");
                 });
 
             modelBuilder.Entity("Domain.Models.Comment", b =>

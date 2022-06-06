@@ -30,6 +30,14 @@ namespace DLL.Repository
                  .ToListAsync()
                  .ConfigureAwait(false);
         }
+        public async Task AddSubCooment(int CommentId,Comment Subcomment)
+        {
+            var comment = await Entities.Include(x=>x.Work).FirstOrDefaultAsync(x=>x.Id==CommentId);
+            comment.Comments.Add(Subcomment);
+            Subcomment.Work = comment.Work;
+            _context.Entry(comment).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
 
     }
 }
