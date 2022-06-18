@@ -2,13 +2,24 @@
 
 @section ItStyle
 {
-<link rel="stylesheet" href="~/css/ItemStyle.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/ItemStyle.css?v=@DateTime.Now.Millisecond" asp-append-version="true" />
 }
 
 
 @{
     ViewData["Title"] = "Home Page";
 }
+<div class="HeadText">
+        <div class="Subject" style="width:60%;min-width:900px">
+           <b>Freelancer</b> - one of the best exchanges.
+        </div>
+        <div class="discription" style="width:60%;min-width:900px">
+            Freelance is the work of professionals in providing services to companies. They are provided both remotely, via the Internet (online) and offline, if the customer and the contractor are in the same city. Here you can find a job or a specialist in any field, of any complexity.
+        </div>
+        <div class="BtnDiv">
+            @Html.ActionLink("Post a Job","AddWork","Work")
+        </div>
+    </div>
 <div class="MainCategoryList">
     @foreach(var item in Model)
     {

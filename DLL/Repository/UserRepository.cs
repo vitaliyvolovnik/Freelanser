@@ -38,6 +38,7 @@ namespace DLL.Repository
             return await Entities
                .Include(x => x.Customer)
                .ThenInclude(x=>x.Work)
+               .ThenInclude(x=>x.Skills)
                .Include(x => x.Employee)
                .ThenInclude(x => x.Skills)
                .Include(x=>x.Employee)
@@ -46,6 +47,22 @@ namespace DLL.Repository
                .Where(predicat)
                .ToListAsync()
                .ConfigureAwait(false);
+        }
+        public async Task EditInfo(User editUser)
+        {
+            var user = await Entities.FindAsync(editUser.Id);
+            user.UserInfo.Name = editUser.UserInfo.Name;
+            user.UserInfo.Surname = editUser.UserInfo.Surname;
+            user.UserInfo.Information = editUser.UserInfo.Information;
+            user.UserInfo.Phone = editUser.UserInfo.Phone;
+            if (user.IsWorker)
+            {
+                user.Employee.Skills = editUser.Employee.Skills;
+            }
+            
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
         }
 
     }

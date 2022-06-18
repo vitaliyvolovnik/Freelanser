@@ -14,6 +14,8 @@
     @RenderSection("WorkList",false)
     @RenderSection("Office",false)
     @RenderSection("Work",false)
+    @RenderSection("EmpList",false)
+    @RenderSection("EmpViewSt",false)
     <link rel="stylesheet" href="~/css/RegisterRadioBtnStyle.css" asp-append-version="true" />
     
 </head>
@@ -27,7 +29,7 @@
                 @Html.ActionLink("Home","Index","Home",null,new { @class="HeaderItem Home"})
                 @Html.ActionLink("Fint a Job","WorkList","Work",null,new { @class="HeaderItem Fint"})
                 @Html.ActionLink("Post a Job","AddWork","Work",null,new { @class="HeaderItem Post"})
-                @Html.ActionLink("About us","Index","Home",null,new { @class="HeaderItem About"})
+                @Html.ActionLink("Find a Talant","EmployeeList","Employee",null,new { @class="HeaderItem About"})
                 
             </div>
             <div class="account">
@@ -54,5 +56,6 @@
     @RenderSection("WorkListScript",false)
     @RenderSection("CommentScript",false)
     @RenderSection("EditScript",false)
+    @RenderSection("EmpJs",false)
 </body>
 </html>

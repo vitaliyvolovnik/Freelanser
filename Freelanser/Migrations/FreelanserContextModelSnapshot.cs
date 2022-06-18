@@ -197,7 +197,7 @@ namespace Freelanser.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -636,9 +636,13 @@ namespace Freelanser.Migrations
 
             modelBuilder.Entity("Domain.Models.Skill", b =>
                 {
-                    b.HasOne("Domain.Models.Category", null)
+                    b.HasOne("Domain.Models.Category", "Category")
                         .WithMany("Skill")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Domain.Models.UserInfo", b =>

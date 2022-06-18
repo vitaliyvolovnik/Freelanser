@@ -15,5 +15,6 @@ namespace BLL.Services.Interfaces
         Task<List<Employee>> GetAllEmployeesWithSkillsAsync(List<Skill> skills);
         Task<IReadOnlyCollection<Employee>> FindEmployeeByConditiomAsync(Expression<Func<Employee, bool>> prediacte);
         Task<Employee> GetEmployeeByIdAsync(int employeeId);
+        Task<IReadOnlyCollection<Employee>> GetEmployeesBySkillCategoryesAsync(Category category);
     }
 }

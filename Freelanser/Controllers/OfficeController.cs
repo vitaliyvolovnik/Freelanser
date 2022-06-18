@@ -57,7 +57,7 @@ namespace Freelanser.Controllers
             else
                 return RedirectToAction("CustomerAccount");
         }
-        public async Task<IActionResult> ChangePhoto(int UserInfId, string file)
+        public async Task<IActionResult> ChangePhoto(int UserInfId)
         {
 
             var rootPath = _environment.WebRootPath;
@@ -85,7 +85,8 @@ namespace Freelanser.Controllers
             model.Name = user.UserInfo.Name;
             model.Surname = user.UserInfo.Surname;
             model.Phone = user.UserInfo.Phone;
-
+            model.UserInfoId = user.UserInfo.Id;
+            
 
             if (user.IsWorker)
             {
@@ -115,6 +116,7 @@ namespace Freelanser.Controllers
                 var skills = await _skillService.GetSkillsbyNamesAsync(skillsstr.ToList());
                 user.Employee.Skills = skills.ToList();
             }
+            await _userService.EditInfoAsync(user);
             return RedirectToAction("index");
         }
         public async Task<ActionResult> Works(bool isFinished)

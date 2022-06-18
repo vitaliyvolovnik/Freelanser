@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService : ICustomerService, IEmployeeService, IUserService,IUserInfoService
+    public class UserService : ICustomerService, IEmployeeService, IUserService, IUserInfoService
     {
         private readonly EmployeeRepository _employeeRepository;
         private readonly CustomerRepository _customerRepository;
@@ -19,9 +19,9 @@ namespace BLL.Services
         private readonly WorkRepository _workRepository;
         private readonly UserInfoRepository _userInfoRepository;
 
-        public UserService(EmployeeRepository employeeRepository, 
-            CustomerRepository customerRepository, 
-            UserRepository userRepository, 
+        public UserService(EmployeeRepository employeeRepository,
+            CustomerRepository customerRepository,
+            UserRepository userRepository,
             WorkRepository workRepository,
             UserInfoRepository userInfoRepository)
         {
@@ -34,7 +34,7 @@ namespace BLL.Services
 
         public async Task<bool> CanselWorkAsync(Customer customer, int workId)
         {
-            return await _workRepository.CanselWork(customer.Id, workId);
+            return await _workRepository.CanselWorkAsync(customer.Id, workId);
 
         }
         public async Task ChangeWorkAsync(Work work, int oldId)
@@ -58,7 +58,7 @@ namespace BLL.Services
         }
         public async Task<bool> TakeWorkAsync(int employeeId, int workId)
         {
-            return await _workRepository.TakeWork(workId, employeeId);
+            return await _workRepository.TakeWorkAsync(workId, employeeId);
         }
         public async Task<Employee> GetEmployeeByIdAsync(int employeeId)
         => (await this._employeeRepository.FindByConditioAsync(x => x.Id == employeeId))?.First();
@@ -72,6 +72,14 @@ namespace BLL.Services
         }
         public async Task<User> GetUserByEmailWithWorksAsync(string email)
         => (await this._userRepository.FindByConditioWithWorksAsync(x => x.Email == email))?.First();
+        public async Task EditInfoAsync(User user)
+        => await _userRepository.EditInfo(user);
+        public async Task<IReadOnlyCollection<Employee>> GetEmployeesBySkillCategoryesAsync(Category category)
+        {
+            
+            if (!category.IsMainCategory)
+                return (await _employeeRepository.FindByConditioAsync(x => x.Skills.Any(y => y.Category.Name == category.Name))).ToList();
+            return (await _employeeRepository.FindByConditioAsync(x => x.Skills.Any(y=>y.Category.CategoryId == category.Id))).ToList();
+        }
     }
-    
 }

@@ -1,0 +1,127 @@
+﻿@model Freelanser.Models.EmployeeListModel
+
+@{
+    ViewData["Title"] = "EmployeeList";
+}
+
+@section EmpList{
+    <link rel="stylesheet" href="~/css/EmployeeListStyle.css" />
+}
+<div class="MainDiv">
+        <div class="Categories">
+        @foreach(var item in Model.Categories)
+        {   
+            <div class="Item MainCategory"> 
+                @Html.ActionLink(item.Name,"EmployeeList","Employee",new {Category = item.Name})
+            </div>
+            @if(Model.CurrentMainCategory!=null)
+            @if (item.Name == Model.CurrentMainCategory.Name)
+            {
+              
+                @foreach(var Sitem in Model.CurrentMainCategory.SubCategory){
+                   <div class="Item SubCategory">
+                        @Html.ActionLink(Sitem.Name,"EmployeeList","Employee",new {Category = Sitem.Name})
+                        @if(Model.CurrentCategory!=null)
+                        {
+                            @if (Sitem.Name == Model.CurrentCategory.Name)
+                            {
+                                @foreach (var Skill in Model.CurrentCategory.Skill)
+                                {
+                                    <div class="chekBDiv">
+                                        <input type="checkbox" class="custom-checkbox" id="@Skill.Name.Replace("+", "Q").Replace(" ","Q").Replace("#", "Q").Replace("&", "Q")" name="happy" value="yes">
+                                        <label for="@Skill.Name.Replace("+", "Q").Replace("#", "Q").Replace("&", "Q").Replace(" ","Q")">@Skill.Name</label>
+                                    </div>
+                                } 
+                            }
+                        }
+                    </div>
+               }   
+            }
+        }
+        </div>
+        <div class="EmploeeList">
+            @foreach (var item in Model.Employees)
+            {
+                string str = "";
+                    foreach(var skill in item.Skills)
+                    {
+                        str += " " + skill.Name.Replace("+", "Q").Replace("#", "Q").Replace("&", "Q").Replace(" ","Q");
+                    }
+                <div class="EItem @str">
+                    <div class="photo">
+                        <img src="@Url.Content(item.User.UserInfo.PhotoPath)" width="100%">
+                    </div>
+                    <div class="Fullname">
+                        @Html.ActionLink(item.User.UserInfo.Name+" "+item.User.UserInfo.Surname,"EmployeeInfPage","Employee",new{Id=item.Id})
+                    </div>
+                    <div class="EmpData">
+                        completed projects:@item.ExecutedWorks.Where(x=>x.IsFinished).Count()
+                    </div>
+                    <div class="EmpData">
+                        number of skills:@item.Skills.Count()
+                    </div>
+                    <div class="EmpData">
+                        number of positive reviews:@item.Reviews.Where(x=>x.Rating>=4).Count()
+                    </div>
+                    <div class="starlist">
+                        @for (double i = 0, rating = 3.6; i < 5; i++)
+                        {
+                            @if (rating > 1 )
+                            {
+                                <div class="star">
+                                    <img src="~/Images/star1.png" width="100%">
+                                </div>
+                                rating--;
+                            }
+                            else if(rating >0.5)
+                            {
+                                <div class="star">
+                                    <img src="~/Images/star0.5.png" width="100%">
+                                </div>
+                                rating--;
+                            }
+                            else
+                            {
+                                <div class="star">
+                                    <img src="~/Images/star0.png" width="100%">
+                                </div>
+                            }
+                                
+
+                        
+                        }
+                    </div>
+                </div>
+            }
+            
+        </div>
+</div>
+
+@section EmpJs{
+    <script>
+        var fileterlist = new Map();
+        $(document).ready(function(){
+            $(":checkbox").change(function(e){
+                var value =  e.target.id;
+                fileterlist.set(value,e.target.checked);
+                ff();
+            })
+        })
+
+        function ff(){
+            $(".EItem").css("display","none");
+            var t= true;
+            for (let pair of fileterlist.entries()) {
+                if(pair[1]){
+                    $(".".concat(pair[0])).css("display","block");
+                    t=false;
+                    
+                }
+            }
+            if(t) {
+                $(".EItem").css("display","block");
+            }
+        }
+    </script>
+
+}

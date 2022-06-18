@@ -32,37 +32,36 @@
         <div class="prof">
             <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditInfo">
+        <form asp-action="EditInfo" style="width:620px">
             
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                <label asp-for="Name" class="control-label" style="width:200px"></label>
+                <input asp-for="Name" class="form-control" style="width:400px" />
                
             </div>
-            <div class="form-group">
-                <label asp-for="Surname" class="control-label"></label>
-                <input asp-for="Surname" class="form-control" />
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                <label asp-for="Surname" class="control-label" style="width:200px"></label>
+                <input asp-for="Surname" class="form-control" style="width:400px"/>
                 
             </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                <label asp-for="Phone" class="control-label" style="width:200px"></label>
+                <input asp-for="Phone" class="form-control" style="width:400px" />
                 
             </div>
-            <div class="form-group">
-                <label asp-for="Information" class="control-label"></label>
-                <textarea asp-for="Information"  class="form-control" ></textarea>
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                <label asp-for="Information" class="control-label" style="width:200px;align-self:flex-start"></label>
+                <textarea asp-for="Information"  class="form-control" style="width:400px;height:150px" ></textarea>
                 
             </div>
-            <div class="form-group">
-                <label asp-for="SkillsStr"  class="control-label"></label>
-                <input asp-for="SkillsStr" id="SkillsStr" class="form-control" />
-                
-                
-            </div>
+            
                     @if (Model.Categories != null)
                     {
-                        <div class="form-group">
+                    <div class="form-group" style="display:flex;align-items:center">
+                        @*<label asp-for="SkillsStr"  class="control-label" style="width:200px"></label>*@
+                        <input asp-for="SkillsStr" type="hidden" id="SkillsStr" class="form-control" style="width:400px" />
+                    </div>
+                        <div class="form-group" >
                             <select name="CategoryName" id="CategoryName" > 
                                 @foreach (var item in Model.Categories)
                                 {
@@ -83,19 +82,36 @@
                                         string Id = $"chk{i}";
                                         <tr>
                                             <td class="opt @item.Name.Replace(" ","_").Replace("&","_")">
-                                                <input id=@Id class="opt1 @item.Name.Replace(" ","_").Replace("&","_")" type="checkbox" @(Model.SkillsStr.Contains(@skill.Name))? "(checked="checked")":"" value="@skill.Name" />
+                                                @if(Model.SkillsStr.Contains(@skill.Name))
+                                                {
+                                                    <input id=@Id class="opt1 @item.Name.Replace(" ","_").Replace("&","_")" type="checkbox" checked="checked" value="@skill.Name" />
+                                                }
+                                                else
+                                                {
+                                                    <input id=@Id class="opt1 @item.Name.Replace(" ","_").Replace("&","_")" type="checkbox" value="@skill.Name" />
+                                                }
                                                 <label for="@Id">@skill.Name</label>
                                             </td>
                                         </tr>
                                     }
                                 }
-                            </table
+                            </table>
                         </div>
                     }
                     <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        <form asp-action="ChangePhoto" enctype="multipart/form-data" method="post">
+            
+            <div class="form-group" style="display:flex;align-items:center" >
+                <input name="UserInfId" type="hidden" value="@Model.UserInfoId" class="form-control" />
+                <input type="file" name="postedFile"/>
+                <input type="submit" value="Change photo" class="btn btn-primary" />
+            </div>
+           
+        </form>
+
     </div>
 </div>
         </div>

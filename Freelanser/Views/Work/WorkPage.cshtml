@@ -21,12 +21,10 @@
                 </div>
                 
             </div>
-            
            <div class="Discription">
                <div class="Text">
                @Model.Context
                </div>
-               
            </div>
            <div class="SkDiv">
             <div class="Skills">
@@ -53,38 +51,32 @@
            <div class="fileList">
                <ul>
                 <li><h5>Files:</h5></li>
-                   <li><a href="" class="FileA">file1.txt</a></li>
-                   <li><a href="" class="FileA">discription.pdf</a></li>
-                   <li><a href="" class="FileA">image1.png</a></li>
+                  @foreach (var item in Model.Files)
+                  {
+                       <li>@Html.ActionLink(item.Name,"DownLoadFile","Work",new {fileName=item.Name,filePath=item.Path}, new {@class="FileA"})</li>
+                  }
+                   
                </ul>  
            </div>
            <div class="Comments">
                <div class="Comment">
-                   <div class="image">
-                   </div>
-                   <div class="text">
-                       <div class="Name">
-                           <b>Vitaliy Volovnik</b> 
-                           <div class="writeTime">
-                            05.05.2022 20:32
-                           </div>
-                       </div>
+                   <div class="text"> 
                        <div class="content">
                           <form asp-action="Comment">
                               <input type="hidden" name="WorkId" value="@Model.Id"/>
                               @Html.TextArea("Text","",5,20,new{placeholder="enter your message",@class="ComentTextArea", style="height:100%"})
                               <button  style="border: none; outline: none;">Send message</button>
                           </form>
-                       </div>
-                        
+                       </div>    
                    </div>
                    
                </div>
                @foreach(var item in Model.Coments){
                if(item.IsMainComment){
                     <div class="Comment">
-                   <div class="image">
-                   </div>
+                   <div class="image" >
+                        <img  class="image" src="@Url.Content(item.User.UserInfo.PhotoPath)" style="object-fit: cover;"/>
+                    </div>
                    <div class="text">
                        <div class="Name">
                            <b>@item.User.UserInfo.Name @item.User.UserInfo.Surname</b> 
@@ -99,8 +91,8 @@
                            @foreach (var Subcomm in item.Comments)
                            {
                                 <div class="Comment">
-                                <div class="image">
-             
+                                <div class="image" >
+                                    <img  class="image" src="@Url.Content(item.User.UserInfo.PhotoPath)" style="object-fit: cover;"/>
                                 </div>
                                 <div class="text">
                                     <div class="Name">

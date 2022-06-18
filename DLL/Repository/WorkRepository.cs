@@ -23,7 +23,6 @@ namespace DLL.Repository
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
-
         public async Task<IReadOnlyCollection<Work>> FindByConditioWithUsersAsync(Expression<Func<Work, bool>> predicat)
         {
             return await Entities
@@ -41,7 +40,6 @@ namespace DLL.Repository
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
-
         public override async Task<IReadOnlyCollection<Work>> GetAllAsync()
         {
             return await Entities
@@ -52,7 +50,6 @@ namespace DLL.Repository
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
-
         public async Task<IReadOnlyCollection<Work>> GetAllWithUsersAsync()
         {
             return await Entities
@@ -79,7 +76,7 @@ namespace DLL.Repository
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
         }
-        public async Task<bool> TakeWork(int workId ,int EmployeeId)
+        public async Task<bool> TakeWorkAsync(int workId ,int EmployeeId)
         {
             try
             {
@@ -97,7 +94,7 @@ namespace DLL.Repository
             
             return true;
         }
-        public async Task<bool> CanselWork(int CustomerId, int WorkId)
+        public async Task<bool> CanselWorkAsync(int CustomerId, int WorkId)
         {
             var works = Entities.Where(x => x.Id == WorkId && x.Customer.Id == CustomerId);
             if (works.Count() == 0) return false;
@@ -114,7 +111,7 @@ namespace DLL.Repository
                 var work = await Entities.FirstAsync(x => x.Id == WorkId);
                 work.Coments.Add(comment);
                 _context.Entry(work).State = EntityState.Modified;
-                _context.SaveChanges();
+                await _context.SaveChangesAsync().ConfigureAwait(false);
                 return true;
             }
             catch
@@ -124,6 +121,13 @@ namespace DLL.Repository
             }
             
             
+        }
+        public async Task ChangeValidState(int WorkId,ValidateState state)
+        {
+            var Work = await Entities.FindAsync(WorkId);
+            Work.Validation = state;
+            base._context.Entry(Work).State = EntityState.Modified;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

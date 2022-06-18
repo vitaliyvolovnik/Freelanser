@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/Header/HeaderStyle.css">
+    <link rel="stylesheet" href="St1.css">
+    <link rel="stylesheet" href="Radio1.css">
+</head>
+<body>
+    <header>
+        <div class="headerMenu">
+            <div class="Menu">
+                <div class="logo">
+                    <div>Freelanser</div>
+                </div>
+                <div class="HeaderItem"><a href="">Fint a Job</a></div>
+                <div class="HeaderItem"><a href="">Post a Job</a></div>
+                <div class="HeaderItem"><a href="">About us</a></div>
+                <div class="HeaderItem"><a href="">Contact</a></div>
+
+            </div>
+            
+            
+            <div class="account">
+                <div class="HeaderItem" style="color:rgb(69, 191, 85) ;"><a href="">Sign In</a></div>
+                <div class="HeaderItem"><a href="">Log In</a></div>
+            </div>
+        </div>
+    </header>
+    <div class="BodyDiv">
+        <div class="container">
+            Signup Form
+            <div class="progress-bar">
+            <div class="step">
+                <p>
+                    Name
+                </p>
+                <div class="bullet">
+                    <span>1</span>
+                </div>
+                <div class="check fas fa-check"></div>
+            </div>
+            <div class="step">
+                <p>
+                    Contact
+                </p>
+                <div class="bullet">
+                    <span>2</span>
+                </div>
+                <div class="check fas fa-check"></div>
+            </div>
+            <div class="step">
+                <p>
+                    Type
+                </p>
+                <div class="bullet">
+                    <span>3</span>
+                </div>
+                <div class="check fas fa-check"></div>
+            </div>
+            <div class="step">
+                <p>
+                    Submit
+                </p>
+                <div class="bullet">
+                    <span>4</span>
+                </div>
+                <div class="check fas fa-check"></div>
+            </div>
+            </div>
+            <div class="form-outer">
+            <form action="#">
+                <div class="page slide-page">
+                    <div class="title">
+                        Basic Info:
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                        First Name
+                        </div>
+                        <input type="text">
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                        Last Name
+                        </div>
+                        <input type="text">
+                    </div>
+                    <div class="field">
+                        <button class="firstNext next">Next</button>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="title">
+                        Contact Info:
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                        Email Address
+                        </div>
+                        <input type="text">
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                        Phone Number
+                        </div>
+                        <input type="Number">
+                    </div>
+                    <div class="field btns">
+                        <button class="prev-1 prev">Previous</button>
+                        <button class="next-1 next">Next</button>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="title">
+                        Account type:
+                    </div>
+                    <div class="field">
+                        <div class="radio">
+                            <input id="radio-1" name="radio" type="radio" checked>
+                            <label for="radio-1" class="radio-label">Employee account</label>
+                        </div>                    
+                    </div>
+                    <div class="field">
+                        <div class="radio">
+                            <input id="radio-2" name="radio" type="radio">
+                            <label  for="radio-2" class="radio-label">Customer account</label>
+                        </div>
+                    </div>
+                    <div class="field btns">
+                        <button class="prev-2 prev">Previous</button>
+                        <button class="next-2 next">Next</button>
+                    </div>
+                </div>
+                <div class="page">
+                    <div class="title">
+                        Password:
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                        Password
+                        </div>
+                        <input type="text">
+                    </div>
+                    <div class="field">
+                        <div class="label">
+                        Confirm password
+                        </div>
+                        <input type="password">
+                    </div>
+                    <div class="field btns">
+                        <button class="prev-3 prev">Previous</button>
+                        <button class="submit">Sign in</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+     <script src="script.js"></script>
+     <script>
+    
+        $(document).ready(function(){
+            $("#CategoryName").change(function(e){
+                alert(2);
+                Display($("#myselect option:selected").text())
+            })
+            $(".opt").css("display:none;");
+        })
+    
+        
+        function Display(name){
+            alert(name);
+            $(".opt").css("display:none;");
+            $(".".concat(name)).css("display:block;");
+        }
+</script>
+<script>
+    $(document).ready(function () {
+    $(".opt").hide();
+    $("#CategoryName").change(function () {
+        Display($(this).children("option:selected").val())
+    })
+
+    })
+    function Display(name) {
+    
+    $(".opt").hide();
+    $(".".concat(name.replaceAll(" ", "_"))).show();
+    }
+    </script>
+</body>
+</html>

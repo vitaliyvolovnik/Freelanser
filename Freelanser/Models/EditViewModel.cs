@@ -9,6 +9,7 @@ namespace Freelanser.Models
         public string? Phone { get; set; }
         public string? Information { get; set; }
         public string SkillsStr { get; set; } = "";
+        public int UserInfoId { get; set; }
         public IReadOnlyCollection<Category> Categories { get; set; }
         
     }

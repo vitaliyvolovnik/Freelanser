@@ -11,10 +11,12 @@ namespace Freelanser.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly CategoryService _categoryService;
 
-        public HomeController(ILogger<HomeController> logger, CategoryService categoryService)
+        public HomeController(ILogger<HomeController> logger,  CategoryService categoryService)
         {
             _logger = logger;
+            
             this._categoryService = categoryService;
+            
         }
 
         public async Task<IActionResult> Index()

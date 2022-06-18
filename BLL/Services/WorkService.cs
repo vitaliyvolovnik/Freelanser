@@ -34,8 +34,11 @@ namespace BLL.Services
             return await _workRepository.GetAllAsync();
         }
         public async Task<List<Work>> GetWorksByCategorysAsync(Category category)
-        {
-            return (await _workRepository.FindByConditioWithUsersAsync(x => x.Category.Name == category.Name)).ToList();
+        {   
+            if(!category.IsMainCategory)
+                return (await _workRepository.FindByConditioAsync(x => x.Category.Name == category.Name )).ToList();
+            return (await _workRepository.FindByConditioAsync(x => x.Category.CategoryId == category.Id)).ToList();
+
         }
         public async Task<List<Work>> GetWorksWithUsersAsync()
         {
@@ -51,5 +54,7 @@ namespace BLL.Services
         => (await _workRepository.FindByConditioAsync(x => x.Validation == state)).ToList();
         public async Task AddSubCommentAsync(int CommentId, Comment SubComment)
         => await _commentRepository.AddSubCooment(CommentId, SubComment);
+        public async Task ChangeValidStateAsync(int WorkId,ValidateState state)
+        => await this._workRepository.ChangeValidState(WorkId, state);
     }
 }

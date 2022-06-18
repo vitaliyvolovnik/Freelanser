@@ -11,6 +11,7 @@
         public string Name { get; set; }
         public List<Employee> Employees { get; set; }
         public List<Work> Works { get; set; }
+        public Category Category { get;set; }
 
     }
 }

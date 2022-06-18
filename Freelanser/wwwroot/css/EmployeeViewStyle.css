@@ -1,0 +1,175 @@
+﻿.MainDiv {
+    width: 80%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+    .MainDiv .WorkBody {
+        border-radius: 10px;
+        margin-top: 15px;
+        border: 1px solid #d5dbdb;
+        width: 100%;
+        font-family: 'Mulish', sans-serif;
+        width: 70%;
+    }
+
+        .MainDiv .WorkBody .NameAndPhopo {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            border-bottom: 1px solid #d5dbdb;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+            .MainDiv .WorkBody .NameAndPhopo .Name {
+                padding-top: 8px;
+                padding-left: 15px;
+                font-size: 30px;
+                font-weight: bold;
+                color: #232323;
+            }
+
+            .MainDiv .WorkBody .NameAndPhopo .imgDiv {
+                width: 100px;
+                height: 100px;
+                border-radius: 50;
+                margin: 7px;
+            }
+
+                .MainDiv .WorkBody .NameAndPhopo .imgDiv img {
+                    width: 100%;
+                    height: 100%;
+                    -o-object-fit: cover;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+
+        .MainDiv .WorkBody .Discription {
+            padding-left: 15px;
+            width: 100%;
+            color: #42504d;
+            border-bottom: 1px solid #d5dbdb;
+            line-height: 20px;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+            .MainDiv .WorkBody .Discription .Text {
+                width: 75%;
+            }
+
+        .MainDiv .WorkBody .SkDiv {
+            width: 100%;
+            padding-left: 15px;
+            border-bottom: 1px solid #d5dbdb;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+
+            .MainDiv .WorkBody .SkDiv .Skills {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+                width: 60%;
+                color: #42504d;
+            }
+
+                .MainDiv .WorkBody .SkDiv .Skills .SkillHeader {
+                    border-radius: 30px;
+                    padding-top: 2px;
+                    padding-bottom: 2px;
+                    padding-left: 5px;
+                    padding-right: 5px;
+                    margin-top: 3px;
+                }
+
+                .MainDiv .WorkBody .SkDiv .Skills .Skill {
+                    background-color: #d5dbdb;
+                    margin: 3px;
+                    border-radius: 30px;
+                    padding-top: 2px;
+                    padding-bottom: 2px;
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+        .MainDiv .WorkBody .infList {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+
+            .MainDiv .WorkBody .infList .infItem {
+                width: 325px;
+                margin: 5px;
+                color: #adb5bd;
+            }
+
+                .MainDiv .WorkBody .infList .infItem .type {
+                    font-weight: bold;
+                    color: #232323;
+                }
+
+        .MainDiv .WorkBody .Comments {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            padding: 5px;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+
+            .MainDiv .WorkBody .Comments .Comment {
+                margin-top: 10px;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+            }
+
+                .MainDiv .WorkBody .Comments .Comment .image {
+                    border-radius: 50px;
+                    width: 50px;
+                    height: 50px;
+                    margin-right: 10px;
+                    background-color: red;
+                }
+
+                .MainDiv .WorkBody .Comments .Comment .text {
+                    width: 80%;
+                    margin-top: 5px;
+                }
+
+                    .MainDiv .WorkBody .Comments .Comment .text .Name .writeTime {
+                        font-size: 10px;
+                        color: #42504d;
+                    }
+/*# sourceMappingURL=EmployeeViewStyle.css.map */

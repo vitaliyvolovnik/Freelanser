@@ -1,0 +1,107 @@
+﻿@model Domain.Models.Employee
+
+@{
+    ViewData["Title"] = "EmployeeInfPage";
+}
+@section EmpViewSt{
+    <link rel="stylesheet" href="~/css/EmployeeViewStyle.css" />
+}
+<div class="MainDiv">
+        <div class="WorkBody">
+             <div class="NameAndPhopo">
+                 <div class="imgDiv">
+                     <img src="@Url.Content(Model.User.UserInfo.PhotoPath)">
+                 </div>
+                 <div class="Name">
+                     @Model.User.UserInfo.Name @Model.User.UserInfo.Surname
+                 </div>              
+             </div>
+             
+            <div class="Discription">
+                <div class="Text">
+                 @Model.User.UserInfo.Information
+                </div>
+                
+            </div>
+            <div class="infList" style="border-bottom: 1px solid #d5dbdb;">
+                <div class="infItem" >
+                    <span class="type">rating:</span> @Model.Rating
+                </div>
+                <div class="infItem">
+                    <span class="type">count of finished work:</span> @Model.ExecutedWorks.Where(x=>x.IsFinished).Count()
+                </div>
+            </div>
+            <div class="SkDiv">
+             <div class="Skills">
+                 <div class="SkillHeader">
+                     Skills:
+                 </div>
+                @foreach (var item in Model.Skills)
+                {
+                     <div class="Skill">
+                        @item.Name
+                    </div>
+                }
+                 
+             </div>
+            </div>
+            <div class="Comments" style="display:none">
+                <div class="Comment">
+                 <div class="image">
+ 
+                 </div>
+                 <div class="text">
+                     <div class="Name">
+                         <b>Vitaliy Volovnik</b> 
+                         <div class="writeTime">
+                          05.05.2022 20:32
+                         </div>
+                     </div>
+                     <div class="content">
+                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem facilis rerum aspernatur officia incidunt commodi, consequuntur nisi quo alias animi illo eos porro harum, laborum quis eaque? Voluptatum, quia dolores.
+                     </div>
+                      <div class="InnerComment">
+                          <div class="Comment">
+                              <div class="image">
+           
+                              </div>
+                              <div class="text">
+                                  <div class="Name">
+                                      <b>Vitaliy Volovnik</b> 
+                                      <div class="writeTime">
+                                       05.05.2022 20:32
+                                      </div>
+                                  </div>
+                                  <div class="content">
+                                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem facilis rerum aspernatur officia incidunt commodi, consequuntur nisi quo alias animi illo eos porro harum, laborum quis eaque? Voluptatum, quia dolores.
+                                  </div>
+                                   
+                              </div>
+                              
+                          </div>
+                          <div class="Comment">
+                              <div class="image">
+           
+                              </div>
+                              <div class="text">
+                                  <div class="Name">
+                                      <b>Vitaliy Volovnik</b> 
+                                      <div class="writeTime">
+                                       05.05.2022 20:32
+                                      </div>
+                                  </div>
+                                  <div class="content">
+                                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem facilis rerum aspernatur officia incidunt commodi, consequuntur nisi quo alias animi illo eos porro harum, laborum quis eaque? Voluptatum, quia dolores.
+                                  </div>
+                                   
+                              </div>
+                              
+                          </div>
+                          
+                      </div>
+                 </div>
+                 
+             </div>
+            </div>
+        </div>
+     </div>

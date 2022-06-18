@@ -4,7 +4,7 @@
     ViewData["Title"] = "CustomerAccount";
 }
 @section Office{
-    <link rel="stylesheet" href="~/css/officeStylet.css" />
+    <link rel="stylesheet" href="~/css/officeStylet.css?v=@DateTime.Now.Millisecond" />
 }
 <div class="MainDiv">
         <div class="MenuList">
@@ -24,11 +24,11 @@
         </div>
         <div class="prof">
             <div class="Pitem">
-                @if(!string.IsNullOrWhiteSpace(Model.User.UserInfo.PhotoPath)){
-                    <div class="img" style="background-size: cover;background-image: url(@Model.User.UserInfo.PhotoPath);">
-
+                 
+                    <div class="img" >
+                        <img  class="img" src="@Url.Content(Model.User.UserInfo.PhotoPath)" style="object-fit: cover;"/>
                     </div>
-                }
+                
                 <div class="mInt">
                     <div class="name">@Model.User.UserInfo.Name @Model.User.UserInfo.Surname</div>
                     <div class="email">
@@ -62,7 +62,4 @@
             }
         </div>
     </div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+

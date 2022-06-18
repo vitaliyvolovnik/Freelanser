@@ -3,6 +3,7 @@ using Domain.Models;
 using Freelanser.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 namespace Freelanser.Controllers
 {
     public class WorkController : Controller
@@ -11,12 +12,14 @@ namespace Freelanser.Controllers
         private readonly UserService _userService;
         private readonly CategoryService _categoryService;
         private readonly SkillService _skillService;
-        public WorkController(WorkService workService, UserService userService, CategoryService categoryService, SkillService skillService)
+        private readonly IHostingEnvironment _environment;
+        public WorkController(WorkService workService, UserService userService, CategoryService categoryService, SkillService skillService, IHostingEnvironment environment)
         {
             this._workService = workService;
             this._userService = userService;
             this._categoryService = categoryService;
             this._skillService = skillService;
+            this._environment = environment;
         }
         public IActionResult Index()
         {
@@ -34,7 +37,7 @@ namespace Freelanser.Controllers
             {
                 var category = (await _categoryService.FindByNameAsync(Category)).First();
                 model.Categories = (await this._categoryService.GetMainCategoriesAsync()).ToList();
-                model.Works = (await _workService.GetWorksByCategorysAsync(new Category() { Name = Category })).ToList();
+                model.Works = (await _workService.GetWorksByCategorysAsync(category)).ToList();
                 if (category.IsMainCategory)
                 {
                     model.CurrentMainCategory = category;
@@ -65,7 +68,7 @@ namespace Freelanser.Controllers
             return View(work);
         }
         [HttpPost]
-        public async Task<IActionResult> PublishWork(AddWorkModel work)
+        public async Task<IActionResult> PublishWork(AddWorkModel work, List<IFormFile> postedFiles)
         {
             var Work = new Work();
             if (string.IsNullOrWhiteSpace(work.Name)
@@ -101,12 +104,32 @@ namespace Freelanser.Controllers
                 }
             }
 
+            //file
+            
+            string path = Path.Combine(this._environment.WebRootPath, "Uploads");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            
+
+            foreach (IFormFile postedFile in postedFiles)
+            {
+                var File = new Domain.Models.File();
+                string filepath =Guid.NewGuid().ToString()+Path.GetFileName(postedFile.FileName);
+                File.Path = "~/Uploads/"+filepath;
+                File.Name = postedFile.FileName;
+                using (FileStream stream = new FileStream(Path.Combine(path, filepath), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);    
+                }
+                Work.Files.Add(File);
+            }
             await this._userService.PublishWorkAsync(Work);
 
             return RedirectToAction("WorkList");
         }
-        
-        
         public async Task<IActionResult> Comment(string Text, int WorkId)
         {
             var comment = new Comment();
@@ -136,6 +159,17 @@ namespace Freelanser.Controllers
 
             await _workService.AddSubCommentAsync(CommentId,comment);
             return RedirectToAction("WorkPage", new { Id = WorkId });
+        }
+        public FileResult DownLoadFile(string fileName,string filePath)
+        {
+            return File(filePath, "text/plain", fileName);
+        }
+        public async Task<IActionResult> TakeWork(int WorkId)
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await this._userService.GetUserByEmailAsync(email);
+            await this._userService.TakeWorkAsync(user.Employee.Id,WorkId);
+            return RedirectToAction("WorkPage", new {ID =WorkId});
         }
         
     }

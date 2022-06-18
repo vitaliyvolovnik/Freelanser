@@ -49,16 +49,25 @@ namespace Freelanser.Controllers
                 return RedirectToAction("AddSkill");
             return RedirectToAction("index");
         }
-
-
-
-        public IActionResult BlockEmployee(int id)
+        /* public IActionResult BlockEmployee(int id)
         {
             return View();
-        }
+        }*/
         public async Task<IActionResult> ValidateList()
         { 
             return View(await this._workService.GetWorksByValidStateAsync(ValidateState.IsInQueue));
+        }
+        [HttpPost]
+        public async Task<IActionResult> ConfirmWork(int WorkId)
+        {
+            await this._workService.ChangeValidStateAsync(WorkId, ValidateState.IsValid);
+            return View();
+        }
+
+        public async Task<IActionResult> RejectWork(int WorkId)
+        {
+            await this._workService.ChangeValidStateAsync(WorkId, ValidateState.IsCanseled);
+            return RedirectToAction();
         }
 
 
