@@ -2,6 +2,7 @@
     $(".opt").hide();
     $("#CategoryName").change(function (e) {
         Display($(this).children("option:selected").val())
+        $("#skillID").css("display","block")
     })
     $("input.opt1").click(function (e) {
         var str = "";

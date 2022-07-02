@@ -1,0 +1,58 @@
+﻿.chekBDiv {
+    margin-bottom: 5px;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.chekBDiv .custom-checkbox + label {
+    display: inline-flex;
+    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: rgb(66, 80, 77);
+}
+
+.chekBDiv .custom-checkbox + label::before {
+        content: "";
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        flex-shrink: 0;
+        flex-grow: 0;
+        color: rgb(66, 80, 77);
+        border: 1px solid #adb5bd;
+        border-radius: 0.25em;
+        margin-right: 0.5em;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 50% 50%;
+    }
+
+.chekBDiv .custom-checkbox:checked + label::before {
+    border-color: rgb(69, 191, 85);
+    background-color: rgb(69, 191, 85);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+.chekBDiv .custom-checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+ .BtnDiv {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #45bf55;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 7px;
+    width:120px;
+    display:flex;
+    justify-content:center
+}
+
+.BtnDiv a:hover {
+    color: white;
+}

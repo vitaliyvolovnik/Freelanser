@@ -11,12 +11,13 @@ namespace DLL.Repository
         {
 
         }
-
         public override async Task<IReadOnlyCollection<User>> GetAllAsync()
         {
             return await Entities
                 .Include(x => x.Customer)
                 .Include(x => x.Employee)
+                .ThenInclude(x=>x.Reviews)
+                .Include(x=>x.Employee)
                 .ThenInclude(x => x.Skills)
                 .Include(x => x.UserInfo)
                 .ToListAsync()
@@ -26,6 +27,8 @@ namespace DLL.Repository
         {
             return await Entities
                .Include(x => x.Customer)
+               .Include(x => x.Employee)
+               .ThenInclude(x => x.Reviews)
                .Include(x => x.Employee)
                .ThenInclude(x=>x.Skills)
                .Include(x => x.UserInfo)
@@ -38,11 +41,23 @@ namespace DLL.Repository
             return await Entities
                .Include(x => x.Customer)
                .ThenInclude(x=>x.Work)
+               .ThenInclude(x => x.ProgectFiles)
+               .Include(x => x.Customer)
+               .ThenInclude(x => x.Work)
                .ThenInclude(x=>x.Skills)
+               .Include(x => x.Employee)
+               .ThenInclude(x => x.Reviews)
+               .ThenInclude(x=>x.Customer)
+               .ThenInclude(x=>x.User)
+               .ThenInclude(x=>x.UserInfo)
                .Include(x => x.Employee)
                .ThenInclude(x => x.Skills)
                .Include(x=>x.Employee)
                .ThenInclude(x=>x.ExecutedWorks)
+               .ThenInclude(x=>x.ProgectFiles)
+               .Include(x => x.Employee)
+               .ThenInclude(x => x.ExecutedWorks)
+               .ThenInclude(x=>x.Skills)
                .Include(x => x.UserInfo)
                .Where(predicat)
                .ToListAsync()

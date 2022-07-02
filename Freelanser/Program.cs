@@ -9,21 +9,28 @@ using Serilog;
 using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+//var connectionString = builder.Configuration.GetConnectionString("FreelanserContextConnection") ?? throw new InvalidOperationException("Connection string 'FreelanserContextConnection' not found.");
 
+//builder.Services.AddDbContext<FreelanserContext>(options =>
+//    options.UseSqlServer(connectionString));;
 
+//builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<FreelanserContext>();;
 
-var keyVaultEndpoint = new Uri("https://freelanservault1.vault.azure.net/");
-builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
-
+/*var keyVaultEndpoint = new Uri("https://freelanservault1.vault.azure.net/");
+builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());*/
+//var keyVaultEndpoint = new Uri("https://freelanservault1.vault.azure.net/");
+//builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential
 // Add services to the container.
-var connectionString = builder.Configuration.GetValue(typeof(string),"DefaultConnection").ToString();
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//var connectionString = builder.Configuration.GetValue(typeof(string),"DefaultConnection").ToString();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Host.UseSerilog((hostingContext, services, configuration) => { configuration.WriteTo.File(builder.Environment.WebRootPath + "/Log.txt"); });
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var t = builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true);
 ConfigureBLL.Configure(builder.Services, connectionString,t );
-builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
+//builder.Services.AddTransient<IEmailSender, SendGridEmailSender>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationInsightsTelemetry();
 builder.Services.AddApplicationInsightsTelemetry();

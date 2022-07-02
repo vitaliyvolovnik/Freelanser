@@ -9,13 +9,16 @@
     <link rel="stylesheet" href="~/css/site.css?v=@DateTime.Now.Millisecond" asp-append-version="true" />
     <link rel="stylesheet" href="~/Freelanser.styles.css?v=@DateTime.Now.Millisecond" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/HeaderStyle.css?v=@DateTime.Now.Millisecond" />
+    <link rel="stylesheet" href="~/css/FooterStyle.css?v=@DateTime.Now.Millisecond" />
     @RenderSection("ItStyle",false)
-    @RenderSection("Regstyles",false)
+    @RenderSection("AutorizeStyles",false)
     @RenderSection("WorkList",false)
     @RenderSection("Office",false)
     @RenderSection("Work",false)
     @RenderSection("EmpList",false)
     @RenderSection("EmpViewSt",false)
+    @RenderSection("AddWork",false)
+    @RenderSection("FinishStyle",false)
     <link rel="stylesheet" href="~/css/RegisterRadioBtnStyle.css" asp-append-version="true" />
     
 </head>
@@ -24,7 +27,7 @@
        <div class="headerMenu">
             <div class="Menu">
                 <div class="logo">
-                    <div>Freelanser</div>
+                    <div style="font-size:25px"><img src="~/Images/F.png" style="align-items:flex-end" width="15px"/>reelanser</div>
                 </div>
                 @Html.ActionLink("Home","Index","Home",null,new { @class="HeaderItem Home"})
                 @Html.ActionLink("Fint a Job","WorkList","Work",null,new { @class="HeaderItem Fint"})
@@ -37,15 +40,33 @@
             </div>
         </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container" style="margin-bottom:150px">
+        <main role="main"  style="min-height:80vh">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Freelanser - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    
+    <footer class="footer text-muted">
+        <div class="rect" style="display:flex;justify-content:center;flex-direction:row;align-items:flex-start">
+           <div style="width:76%;margin:auto 0;align-self:flex-start;height:100%;display:flex;">
+               <div class="logo" style="align-self:flex-start;line-height:30px">
+                    <div style="font-size:25px"><img src="~/Images/F.png" style="align-items:flex-end" width="15px"/>reelanser</div>
+                </div>
+                <div class="logo" style="align-self:flex-start; margin-left:20px;display:flex;flex-direction:column">
+                    <div style="font-size:22px;margin:3px;line-height:30px">
+                        Contacts
+                    </div>
+                    <div style="font-size:18px;margin:3px;line-height:30px">
+                        FrelanserWork@gmail.com
+                    </div> 
+                     <div style="font-size:18px;margin:3px;line-height:30px">
+                       +3540654900654
+                    </div>
+                     <div style="font-size:18px; margin:3px;line-height:30px">
+                        +380804382430
+                    </div>
+                </div>
+           </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -57,5 +78,6 @@
     @RenderSection("CommentScript",false)
     @RenderSection("EditScript",false)
     @RenderSection("EmpJs",false)
+    @RenderSection("FInishWorkJS",false)
 </body>
 </html>

@@ -18,6 +18,7 @@ namespace DLL.Repository
                 .ThenInclude(x => x.UserInfo)
                 .Include(x => x.ExecutedWorks)
                 .Include(x => x.Reviews)
+                .ThenInclude(x=>x.Customer)
                 .Include(x => x.Skills)
                 .ToListAsync()
                 .ConfigureAwait(false);

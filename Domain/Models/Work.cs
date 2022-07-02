@@ -14,7 +14,9 @@ namespace Domain.Models
         public string Name { get; set; }
         public string Context { get; set; }
         public Customer Customer { get; set; }
+        public int CustomerId { get; set; }
         public Employee? Worker { get; set; }
+        public int? WorkerId { get; set; }
         public bool IsFinished { get; set; }
         public bool IsPublicshed { get; set; }
         public Category Category { get; set; }
@@ -22,10 +24,12 @@ namespace Domain.Models
         public double Price { get; set; }
         public List<Comment> Coments { get; set; }
         public List<File> Files { get; set; }
+        public List<File> ProgectFiles { get; set; }
         public ValidateState Validation { get; set; }
         public string TypeOfPayment { get; set; }
         public DateTime Created { get; set; }
         public DateTime Finish { get; set; }
+        public Review Review { get; set; }
 
     }
     public enum ValidateState
@@ -33,5 +37,6 @@ namespace Domain.Models
         IsValid,
         IsCanseled,
         IsInQueue,
+        IsTaken,
     }
 }

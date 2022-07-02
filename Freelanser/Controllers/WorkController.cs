@@ -31,13 +31,13 @@ namespace Freelanser.Controllers
             if (Category == null)
             {
                 model.Categories = (await this._categoryService.GetMainCategoriesAsync()).ToList();
-                model.Works = (await _workService.GetWorksAsync()).ToList();
+                model.Works = (await _workService.GetWorksAsync()).Where(x=>x.Validation!=ValidateState.IsTaken).ToList();
             }
             else
             {
                 var category = (await _categoryService.FindByNameAsync(Category)).First();
                 model.Categories = (await this._categoryService.GetMainCategoriesAsync()).ToList();
-                model.Works = (await _workService.GetWorksByCategorysAsync(category)).ToList();
+                model.Works = (await _workService.GetWorksByCategorysAsync(category)).Where(x => x.Validation != ValidateState.IsTaken).ToList();
                 if (category.IsMainCategory)
                 {
                     model.CurrentMainCategory = category;
@@ -57,6 +57,20 @@ namespace Freelanser.Controllers
         public async Task<IActionResult> WorkPage(int Id)
         {
             var work = await this._workService.GetWorkByIdAsync(Id);
+            if (work == null ||
+               work.Validation == ValidateState.IsTaken ||
+               work.Validation == ValidateState.IsCanseled)
+                return RedirectToAction("WorkList");
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var user = await this._userService.GetUserByEmailAsync(email);
+            if (user.Employee != null)
+            {
+                work.WorkerId = user.Employee.Id;
+            }
+            else
+            {
+                work.WorkerId = -1;
+            }
             return View(work);
         }
         public async Task<IActionResult> AddWork(AddWorkModel? work)
@@ -171,6 +185,79 @@ namespace Freelanser.Controllers
             await this._userService.TakeWorkAsync(user.Employee.Id,WorkId);
             return RedirectToAction("WorkPage", new {ID =WorkId});
         }
+        public async Task<IActionResult> UploadProject(int workId)
+        {
+            if (workId == 0)
+                return RedirectToAction("WorkList");
+            return View(workId);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UploadProject(int WorkId, List<IFormFile> postedFiles)
+        {
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var work = await _workService.GetWorkByIdAsync(WorkId);
+            if (work.Worker ==null) return RedirectToAction("WorkList");
+            else if(work.Worker.User.Email!=email) return RedirectToAction("WorkList");
+
+            var Fileslist = new List<Domain.Models.File>();
+
+            string path = Path.Combine(this._environment.WebRootPath, "Uploads");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+
+
+            foreach (IFormFile postedFile in postedFiles)
+            {
+                var File = new Domain.Models.File();
+                string filepath = Guid.NewGuid().ToString() + Path.GetFileName(postedFile.FileName);
+                File.Path = "~/Uploads/" + filepath;
+                File.Name = postedFile.FileName;
+                using (FileStream stream = new FileStream(Path.Combine(path, filepath), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                }
+                Fileslist.Add(File);
+            }
+            await _workService.UploadProjectAsync(WorkId, Fileslist);
+            return RedirectToAction("Works","Office", new { IsFinished = false });
+        }
+        public async Task<IActionResult> FinishWork(int Workid)
+        {
+            return View(await _workService.GetWorkByIdAsync(Workid));
+        }
+        [HttpPost]
+        public async Task<IActionResult> FinishWork(bool Addreview,int WorkId,int Point,string Text) {
+
+            var email = User.FindFirstValue(ClaimTypes.Email);
+            var work = await _workService.GetWorkByIdAsync(WorkId);
+            if (work.Worker == null) return RedirectToAction("WorkList");
+            else if (work.Customer.User.Email != email) return RedirectToAction("WorkList");
+
+
+            await _workService.FinishWorkAsync(WorkId);
+            if (Addreview)
+            {
+                var review = new Review()
+                {
+                    CreatedTime = DateTime.Now,
+                    Text = Text,
+                    Rating = Point,
+                    Customer = work.Customer,
+                    Worker = work.Worker,
+                    WorkId = work.Id
+                };
+                await _userService.AddReviewAsync(review);
+            }
+
+            return RedirectToAction("Works","Office",new {isFinished=false});
+        }
         
-    }
+        public async Task<IActionResult> FilesProj(int Workid)
+        {
+            return View(await _workService.GetWorkByIdAsync(Workid));
+        }
+}
 }

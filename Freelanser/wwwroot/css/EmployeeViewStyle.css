@@ -1,5 +1,5 @@
 ﻿.MainDiv {
-    width: 80%;
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -7,7 +7,7 @@
     -ms-flex-align: start;
     align-items: flex-start;
     margin: 0 auto;
-    min-height: 100vh;
+    min-height: 96vh;
     padding: 15px;
 }
 
@@ -173,3 +173,49 @@
                         color: #42504d;
                     }
 /*# sourceMappingURL=EmployeeViewStyle.css.map */
+.Comments {
+    display: flex;
+    padding: 5px;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+    .Comments .Comment {
+        margin-top: 10px;
+        display: flex;
+    }
+
+        .Comments .Comment .image {
+            border-radius: 50px;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            background-color: red;
+        }
+
+        .Comments .Comment .text {
+            width: 80%;
+            margin-top: 5px;
+        }
+
+            .Comments .Comment .text .Name .writeTime {
+                font-size: 10px;
+                color: rgb(66, 80, 77);
+            }
+
+.starlist {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-item-align: center;
+    align-self: center;
+    bottom: 10px;
+}
+
+    .starlist .star {
+        width: 30px;
+    }

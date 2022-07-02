@@ -1,0 +1,63 @@
+﻿@model Domain.Models.Work
+
+@section FinishStyle{
+    <link rel="stylesheet" href="~/css/FinishStyle.css?v=@DateTime.Now.Millisecond" />
+}
+
+<div class="MainDiv">
+    <div class="title" style="font-size:28px;">
+         @Html.ActionLink(@Model.Name,"WorkPage","Work",new {Id=Model.Id},new{style="color:rgb(69, 191, 85);font-size:25px"})
+    </div>
+    <div class="title" style="font-size:22px;" >
+        completed project files
+    </div>
+    <div class="Files">
+       <ul>
+            @foreach (var item in Model.ProgectFiles)
+            {
+                <li style="list-style-type:none">
+                    @Html.ActionLink(item.Name,"DownLoadFile","Work",new {fileName=item.Name,filePath=item.Path},new {style="font-size:20px"})
+               </li>
+            }
+       </ul>
+    </div>
+    <form  asp-action="FinishWork" asp-controller="Work" method="post"> 
+        <div class="chekBDiv">
+            <input type="checkbox" class="custom-checkbox" id="Addreviewchek" name="Addreviewchek" value="true">
+            <label for="Addreviewchek">Add review</label>
+        </div>
+        <div id="reviewDiv" style="width:200px;height:200px;display:none;flex-direction:column;justify-content:flex-start">
+            <input type="hidden" id="WorkId" name="WorkId" value="@Model.Id"/>
+            <input type="hidden" name="Point" id="Point"/>
+            <input type="hidden" name="Addreview" id="Addreview"/>
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px;width:450px;margin-top:10px;">
+                <label name="Text" class="control-label" style="width:159px;align-self:flex-start">Rating</label>
+                 <div class="stars" style="display:flex;">
+                    <img src="~/Images/star0.png" id="star1" style="width:40px;height:40px;" />
+                    <img src="~/Images/star0.png" id="star2" style="width:40px;height:40px"/>
+                    <img src="~/Images/star0.png" id="star3" style="width:40px;height:40px"/>
+                    <img src="~/Images/star0.png" id="star4" style="width:40px;height:40px"/>
+                    <img src="~/Images/star0.png" id="star5" style="width:40px;height:40px"/>
+                </div>
+            </div>
+           
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px;width:450px;margin-top:10px;">
+                <label name="Text" class="control-label" style="width:159px;align-self:flex-start">Review text</label>
+                <textarea name="Text"  class="form-control" style="width:300px;height:120px" ></textarea>
+            </div>
+            
+ 
+        </div>
+        <div class="BtnDiv">
+            
+            <button style="border-color:transparent;background-color:transparent;color:white">Finish work</button>
+        </div>
+    </form>
+</div>
+
+
+@section FInishWorkJS{
+    <script src="~/js/FinishWork.js?v=@DateTime.Now.Millisecond"></script>
+
+}
+

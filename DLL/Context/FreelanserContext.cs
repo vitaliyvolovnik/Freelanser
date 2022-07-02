@@ -56,6 +56,8 @@ namespace DLL.Context
             builder.HasMany(x => x.Coments).WithOne(x => x.Work);
             builder.HasOne(x => x.Category).WithMany(x => x.Works);
             builder.HasMany(x => x.Skills).WithMany(x=>x.Works);
+            builder.HasOne(x => x.Worker).WithMany(x => x.ExecutedWorks).HasForeignKey(x => x.WorkerId);
+            builder.HasOne(x => x.Review).WithOne(x => x.Work).HasForeignKey<Review>(x => x.WorkId);
         }
         protected void ConfigureUserInfo(EntityTypeBuilder<UserInfo> builder)
         {

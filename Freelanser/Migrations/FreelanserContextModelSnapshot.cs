@@ -17,7 +17,7 @@ namespace Freelanser.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.5")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -150,9 +150,14 @@ namespace Freelanser.Migrations
                     b.Property<int?>("WorkId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WorkId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("WorkId");
+
+                    b.HasIndex("WorkId1");
 
                     b.ToTable("Files");
                 });
@@ -177,12 +182,19 @@ namespace Freelanser.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("WorkId")
+                        .HasColumnType("int");
+
                     b.Property<int>("WorkerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("WorkId")
+                        .IsUnique()
+                        .HasFilter("[WorkId] IS NOT NULL");
 
                     b.HasIndex("WorkerId");
 
@@ -613,6 +625,10 @@ namespace Freelanser.Migrations
                     b.HasOne("Domain.Models.Work", null)
                         .WithMany("Files")
                         .HasForeignKey("WorkId");
+
+                    b.HasOne("Domain.Models.Work", null)
+                        .WithMany("ProgectFiles")
+                        .HasForeignKey("WorkId1");
                 });
 
             modelBuilder.Entity("Domain.Models.Review", b =>
@@ -623,6 +639,10 @@ namespace Freelanser.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Models.Work", "Work")
+                        .WithOne("Review")
+                        .HasForeignKey("Domain.Models.Review", "WorkId");
+
                     b.HasOne("Domain.Models.Employee", "Worker")
                         .WithMany("Reviews")
                         .HasForeignKey("WorkerId")
@@ -630,6 +650,8 @@ namespace Freelanser.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Work");
 
                     b.Navigation("Worker");
                 });
@@ -795,6 +817,11 @@ namespace Freelanser.Migrations
                     b.Navigation("Coments");
 
                     b.Navigation("Files");
+
+                    b.Navigation("ProgectFiles");
+
+                    b.Navigation("Review")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Models.User", b =>

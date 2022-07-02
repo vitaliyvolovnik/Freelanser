@@ -1,11 +1,11 @@
 ﻿.MainDiv {
-    width: 80%;
+    width: 100%;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: flex-start;
     -webkit-box-align: start;
     -ms-flex-align: start;
     align-items: flex-start;
@@ -16,6 +16,7 @@
         width: 24%;
         height: 100%;
         padding-top: 15px;
+        border-right: 1px solid #d5dbdb;
     }
 
         .MainDiv .Categories .Item {
@@ -93,11 +94,12 @@
     .MainDiv .WorksList {
         font-family: 'Mulish', sans-serif;
         width: 75%;
-        min-height: 100vh;
+        min-height: 85vh;
         border-left: 1px solid #d5dbdb;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        margin-left:-1px;
         -webkit-box-orient: vertical;
         -webkit-box-direction: normal;
         -ms-flex-direction: column;

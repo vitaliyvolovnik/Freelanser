@@ -136,5 +136,15 @@ namespace Freelanser.Controllers
                 return View(user);
             }
         }
+        public async Task<IActionResult> ReviewPage()
+        {
+            var email = this.User.FindFirstValue(ClaimTypes.Email);
+            var user = await this._userService.GetUserByEmailWithWorksAsync(email);
+            if (user == null)
+                return RedirectToAction("index", new { @Controller = "Home" }); 
+            if(!user.IsWorker)
+                return RedirectToAction("index", new { @Controller = "Home" });
+            return View(user.Employee);
+        }
     }
 }

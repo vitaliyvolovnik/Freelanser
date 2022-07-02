@@ -1,33 +1,25 @@
 ﻿.MainDiv {
-    width: 80%;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    width: 100%;
     display: flex;
-    -webkit-box-align: start;
-    -ms-flex-align: start;
     align-items: flex-start;
     margin: 0 auto;
-    min-height: 100vh;
+    min-height: 96vh;
     padding: 15px;
 }
 
     .MainDiv .WorkBody {
         border-radius: 10px;
         margin-top: 15px;
-        border: 1px solid #d5dbdb;
+        border: 1px solid rgb(213, 219, 219);
         width: 100%;
-        font-family: 'Mulish', sans-serif;
+        font-family: "Mulish", sans-serif;
         width: 70%;
     }
 
         .MainDiv .WorkBody .NameAndPrice {
-            display: -webkit-box;
-            display: -ms-flexbox;
             display: flex;
-            -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
             justify-content: space-between;
-            border-bottom: 1px solid #d5dbdb;
+            border-bottom: 1px solid rgb(213, 219, 219);
             padding-bottom: 6px;
             margin-bottom: 12px;
         }
@@ -37,7 +29,7 @@
                 padding-left: 15px;
                 font-size: 28px;
                 font-weight: bold;
-                color: #45bf55;
+                color: rgb(69, 191, 85);
             }
 
             .MainDiv .WorkBody .NameAndPrice .Price {
@@ -54,8 +46,8 @@
         .MainDiv .WorkBody .Discription {
             padding-left: 15px;
             width: 100%;
-            color: #42504d;
-            border-bottom: 1px solid #d5dbdb;
+            color: rgb(66, 80, 77);
+            border-bottom: 1px solid rgb(213, 219, 219);
             line-height: 20px;
             padding-bottom: 6px;
             margin-bottom: 12px;
@@ -68,19 +60,16 @@
         .MainDiv .WorkBody .SkDiv {
             width: 100%;
             padding-left: 15px;
-            border-bottom: 1px solid #d5dbdb;
+            border-bottom: 1px solid rgb(213, 219, 219);
             padding-bottom: 6px;
             margin-bottom: 12px;
         }
 
             .MainDiv .WorkBody .SkDiv .Skills {
-                display: -webkit-box;
-                display: -ms-flexbox;
                 display: flex;
-                -ms-flex-wrap: wrap;
                 flex-wrap: wrap;
                 width: 60%;
-                color: #42504d;
+                color: rgb(66, 80, 77);
             }
 
                 .MainDiv .WorkBody .SkDiv .Skills .SkillHeader {
@@ -93,7 +82,7 @@
                 }
 
                 .MainDiv .WorkBody .SkDiv .Skills .Skill {
-                    background-color: #d5dbdb;
+                    background-color: rgb(213, 219, 219);
                     margin: 3px;
                     border-radius: 30px;
                     padding-top: 2px;
@@ -104,8 +93,8 @@
 
         .MainDiv .WorkBody .fileList {
             padding-left: 15px;
-            color: #42504d;
-            border-bottom: 1px solid #d5dbdb;
+            color: rgb(66, 80, 77);
+            border-bottom: 1px solid rgb(213, 219, 219);
             padding-bottom: 8px;
         }
 
@@ -118,16 +107,10 @@
                 }
 
         .MainDiv .WorkBody .Times {
-            display: -webkit-box;
-            display: -ms-flexbox;
             display: flex;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: row;
             flex-direction: row;
-            -ms-flex-pack: distribute;
             justify-content: space-around;
-            border-bottom: 1px solid #d5dbdb;
+            border-bottom: 1px solid rgb(213, 219, 219);
             padding-bottom: 12px;
             margin-bottom: 12px;
         }
@@ -137,24 +120,34 @@
                 color: #adb5bd;
             }
 
+        .MainDiv .WorkBody .btnrow {
+            padding-left: 15px;
+            color: #FFF;
+            border-bottom: 1px solid rgb(213, 219, 219);
+            font-weight: 600;
+            display: flex;
+        }
+
+            .MainDiv .WorkBody .btnrow .btndiv {
+                background-color: rgb(69, 191, 85);
+                border-radius: 10px;
+                margin: 10px;
+                padding: 10px;
+            }
+
+                .MainDiv .WorkBody .btnrow .btndiv a:hover {
+                    color: #FFF;
+                }
+
         .MainDiv .WorkBody .Comments {
-            display: -webkit-box;
-            display: -ms-flexbox;
             display: flex;
             padding: 5px;
-            -webkit-box-pack: start;
-            -ms-flex-pack: start;
             justify-content: flex-start;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-            -ms-flex-direction: column;
             flex-direction: column;
         }
 
             .MainDiv .WorkBody .Comments .Comment {
                 margin-top: 10px;
-                display: -webkit-box;
-                display: -ms-flexbox;
                 display: flex;
             }
 
@@ -173,8 +166,6 @@
 
                     .MainDiv .WorkBody .Comments .Comment .text .Name .writeTime {
                         font-size: 10px;
-                        color: #42504d;
+                        color: rgb(66, 80, 77);
                     }
-.ComentTextArea{
-    width:100%;
-}
+/*# sourceMappingURL=WorkPAge.css.map */

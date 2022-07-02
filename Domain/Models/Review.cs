@@ -8,5 +8,7 @@
         public Customer Customer { get; set; }
         public int Rating { get; set; }
         public Employee Worker { get; set; }
+        public Work? Work { get; set; }
+        public int? WorkId { get; set; }
     }
 }

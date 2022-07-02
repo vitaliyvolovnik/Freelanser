@@ -19,6 +19,8 @@ namespace DLL.Repository
                 .Include(x => x.Coments)
                 .Include(x => x.Category)
                 .Include(x => x.Skills)
+                .Include(x => x.ProgectFiles)
+                .Include(x => x.Review)
                 .Where(predicat)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -36,6 +38,8 @@ namespace DLL.Repository
                 .Include(x => x.Coments)
                 .Include(x => x.Category)
                 .Include(x => x.Skills)
+                .Include(x => x.ProgectFiles)
+                .Include(x => x.Review)
                 .Where(predicat)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -47,6 +51,8 @@ namespace DLL.Repository
                 .Include(x => x.Coments)
                 .Include(x => x.Category)
                 .Include(x => x.Skills)
+                .Include(x => x.ProgectFiles)
+                .Include(x => x.Review)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -56,13 +62,15 @@ namespace DLL.Repository
                 .Include(x => x.Files)
                 .Include(x => x.Coments)
                 .Include(x => x.Category)
-                .Include(x=>x.Skills)
+                .Include(x => x.Skills)
+                .Include(x => x.ProgectFiles)
+                .Include(x=>x.Review)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
-        public async Task UpdateAsync(int OldWorkId,Work NewWork)
+        public async Task UpdateAsync(int OldWorkId, Work NewWork)
         {
-            var works =  Entities.Where(x=>x.Id == OldWorkId);
+            var works = Entities.Where(x => x.Id == OldWorkId);
             if (works.Count() == 0) return;
             var work = works.First();
             work.Files = NewWork.Files;
@@ -76,13 +84,15 @@ namespace DLL.Repository
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
         }
-        public async Task<bool> TakeWorkAsync(int workId ,int EmployeeId)
+        public async Task<bool> TakeWorkAsync(int workId, int EmployeeId)
         {
             try
             {
-                var Worker = _context.Employees.First(x => x.Id == EmployeeId);
-                var work = Entities.First(x => x.Id == workId);
-                work.Worker = Worker;
+
+
+                var work = await Entities.FirstAsync(x => x.Id == workId).ConfigureAwait(false);
+                work.Validation = ValidateState.IsTaken;
+                work.WorkerId = EmployeeId;
                 base._context.Entry(work).State = EntityState.Modified;
                 await _context.SaveChangesAsync().ConfigureAwait(false);
             }
@@ -90,8 +100,8 @@ namespace DLL.Repository
             {
                 return false;
             }
-            
-            
+
+
             return true;
         }
         public async Task<bool> CanselWorkAsync(int CustomerId, int WorkId)
@@ -104,11 +114,11 @@ namespace DLL.Repository
             await _context.SaveChangesAsync().ConfigureAwait(false);
             return true;
         }
-        public async Task<bool> AddComentAsync(int WorkId,Comment comment)
+        public async Task<bool> AddComentAsync(int WorkId, Comment comment)
         {
             try
             {
-                var work = await Entities.FirstAsync(x => x.Id == WorkId);
+                var work = await Entities.FirstAsync(x => x.Id == WorkId).ConfigureAwait(false);
                 work.Coments.Add(comment);
                 _context.Entry(work).State = EntityState.Modified;
                 await _context.SaveChangesAsync().ConfigureAwait(false);
@@ -119,13 +129,27 @@ namespace DLL.Repository
                 return false;
 
             }
-            
-            
+
+
         }
-        public async Task ChangeValidState(int WorkId,ValidateState state)
+        public async Task ChangeValidState(int WorkId, ValidateState state)
         {
-            var Work = await Entities.FindAsync(WorkId);
+            var Work = await Entities.FindAsync(WorkId).ConfigureAwait(false);
             Work.Validation = state;
+            base._context.Entry(Work).State = EntityState.Modified;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+        public async Task UploadFile(int WorkId, List<Domain.Models.File> files)
+        {
+            var work = await Entities.FindAsync(WorkId).ConfigureAwait(false);
+            work.ProgectFiles = files;
+            base._context.Entry(work).State = EntityState.Modified;
+            await _context.SaveChangesAsync().ConfigureAwait(false);
+        }
+        public async Task FinishWork(int WorkId)
+        {
+            var Work = await Entities.FindAsync(WorkId).ConfigureAwait(false);
+            Work.IsFinished = true;
             base._context.Entry(Work).State = EntityState.Modified;
             await _context.SaveChangesAsync().ConfigureAwait(false);
         }

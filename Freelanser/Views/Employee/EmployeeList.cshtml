@@ -64,9 +64,9 @@
                         number of positive reviews:@item.Reviews.Where(x=>x.Rating>=4).Count()
                     </div>
                     <div class="starlist">
-                        @for (double i = 0, rating = 3.6; i < 5; i++)
+                        @for (double i = 0, rating = item.Reviews.Sum(x=>x.Rating)/item.Reviews.Count; i < 5; i++)
                         {
-                            @if (rating > 1 )
+                            @if (rating >= 1 )
                             {
                                 <div class="star">
                                     <img src="~/Images/star1.png" width="100%">
@@ -113,13 +113,13 @@
             var t= true;
             for (let pair of fileterlist.entries()) {
                 if(pair[1]){
-                    $(".".concat(pair[0])).css("display","block");
+                    $(".".concat(pair[0])).css("display","flex");
                     t=false;
                     
                 }
             }
             if(t) {
-                $(".EItem").css("display","block");
+                $(".EItem").css("display","flex");
             }
         }
     </script>

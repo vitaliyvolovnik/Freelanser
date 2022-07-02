@@ -3,43 +3,49 @@
 @{
     ViewData["Title"] = "AddWork";
 }
-
+@section AddWork{
+    <link rel="stylesheet" href="~/css/AddWorkStyle.css?v=@DateTime.Now.Millisecond" />
+}
 <h4>Work</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="PublishWork" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" style="display:flex;flex-direction:column">
-                @Html.LabelFor(x=>x.Name)
-                @Html.TextBoxFor(x=>x.Name)
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                <label asp-for="Name" class="control-label" style="width:200px"></label>
+                <input asp-for="Name" class="form-control" style="width:400px" />
             </div>
-            <div class="form-group" style="display:flex;flex-direction:column">
-                @Html.LabelFor(x=>x.Context)
-                @Html.TextAreaFor(x=>x.Context,10,22,new{})
+            <div class="form-group" style="display:flex;align-items:flex-start;margin-bottom:10px">
+                <label asp-for="Context" class="control-label" style="width:200px"></label>
+                <textarea asp-for="Context" rows="10" cols="22" class="form-control" style="width:400px"></textarea>  
             </div>
-            <div class="form-group" style="display:flex;flex-direction:column">
-                @Html.LabelFor(x=>x.Price)
-                @Html.EditorFor(x=>x.Price)
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                <label asp-for="Price" class="control-label" style="width:200px"></label>
+                <input asp-for="Price" class="form-control" style="width:400px" />
             </div>
-            <div class="form-group" style="display:flex;flex-direction:column">
-                @Html.LabelFor(x=>x.SkillsStr)
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                    <div class="radio" style="display:flex;align-items:center">
+                        @Html.RadioButtonFor(x=>x.TypeOfPayment,"fixed-price",new{id="radio-1"})
+                        <label for="radio-1" class="radio-label">fixed-price</label>
+                    </div>
+                    <div class="radio" style="display:flex;align-items:center">
+                        @Html.RadioButtonFor(x=>x.TypeOfPayment,"hourly-rate",new{id="radio-2"})
+                        <label for="radio-2" class="radio-label">hourly-rate</label>
+                    </div>
+            </div>
+            
+            <div class="form-group" style="display:none">
                 @Html.EditorFor(x=>x.SkillsStr,null,new {id="SkillsStr"})
             </div>
-            <div class="form-group" style="display:flex;flex-direction:column">
+            <div class="form-group" style="display:flex;align-items:center;margin-bottom:10px">
+                <label asp-for="Price" class="control-label" style="width:200px">Finish time</label>
+                <input asp-for="Finish" type="datetime-local" id="inputDate"  class="form-control" runat="server" style="width:400px" />
+            </div>
+            @*<div class="form-group" style="display:flex;flex-direction:column">
                 <label for="inputDate">Finish date</label>
                 <input type="datetime-local" name="Finish" id="inputDate" runat="server">
-            </div>
-            <div class="form-group">
-                <div class="radio">
-                    @Html.RadioButtonFor(x=>x.TypeOfPayment,"fixed-price",new{id="radio-1"})
-                    <label for="radio-1" class="radio-label">fixed-price</label>
-                </div>
-                <div class="radio">
-                    @Html.RadioButtonFor(x=>x.TypeOfPayment,"hourly-rate",new{id="radio-2"})
-                    <label for="radio-2" class="radio-label">hourly-rate</label>
-                </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 <select name="CategoryName" id="CategoryName" > 
                     @foreach(var item in Model.Cateories)
@@ -51,20 +57,19 @@
                     }
                 </select>
             </div>
-            <div class="form-group" style="display:flex;flex-direction:column">
-                <input type="file" name="postedFiles" multiple />
-            </div>
             
-            <div class="form-group">
+            
+            <div class="form-group" style="border:1px solid #000;margin:10px 0px;border-radius:10px;padding:5px;display:none;" id="skillID">
                 <table id="tblFruits">
+                    @{int i = 0;}
                      @foreach(var item in Model.Cateories)
                     {
-                        int i = 0;
+                        
                         @foreach(var skill in item.Skill)
                         {
-                            string Id = $"chk{i}";
+                            string Id = $"chk{i++}";
                             <tr>
-                                <td class="opt @item.Name.Replace(" ","_").Replace("&","_")"><input id=@Id class="opt1 @item.Name.Replace(" ","_").Replace("&","_")" type="checkbox" value="@skill.Name"/><label for="@Id">@skill.Name</label></td>
+                                <td class="opt @item.Name.Replace(" ","_").Replace("&","_")"><input id=@Id class="opt1 @item.Name.Replace(" ","_").Replace("&","_").Replace("/","_").Replace("\\","_")  custom-checkbox" type="checkbox" value="@skill.Name"/><label for="@Id">@skill.Name</label></td>
                             </tr>
                         }
                     }
@@ -73,15 +78,15 @@
                 </table>
                 
             </div>
+            
+            <div class="form-group" style="display:flex;flex-direction:column; margin:10px 0px" >
+                <input type="file" name="postedFiles" multiple />
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 
@@ -90,5 +95,5 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 @section AddWScripts
-{<script src="~/js/AddWork.js"></script>}
+{<script src="~/js/AddWork.js?v=@DateTime.Now.Millisecond"></script>}
     

@@ -21,7 +21,7 @@ header {
 }
 
     header .headerMenu {
-        color: #ede7d2;
+        color:#FFF;
         font-size: 20px;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -46,6 +46,7 @@ header {
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
+            align-items:center;
         }
 
             header .headerMenu .Menu .logo {

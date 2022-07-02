@@ -4,7 +4,7 @@
     ViewData["Title"] = "EmployeeInfPage";
 }
 @section EmpViewSt{
-    <link rel="stylesheet" href="~/css/EmployeeViewStyle.css" />
+    <link rel="stylesheet" href="~/css/EmployeeViewStyle.css?v=@DateTime.Now.Millisecond" />
 }
 <div class="MainDiv">
         <div class="WorkBody">
@@ -21,7 +21,6 @@
                 <div class="Text">
                  @Model.User.UserInfo.Information
                 </div>
-                
             </div>
             <div class="infList" style="border-bottom: 1px solid #d5dbdb;">
                 <div class="infItem" >
@@ -45,63 +44,58 @@
                  
              </div>
             </div>
-            <div class="Comments" style="display:none">
-                <div class="Comment">
-                 <div class="image">
- 
-                 </div>
-                 <div class="text">
-                     <div class="Name">
-                         <b>Vitaliy Volovnik</b> 
-                         <div class="writeTime">
-                          05.05.2022 20:32
-                         </div>
-                     </div>
-                     <div class="content">
-                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem facilis rerum aspernatur officia incidunt commodi, consequuntur nisi quo alias animi illo eos porro harum, laborum quis eaque? Voluptatum, quia dolores.
-                     </div>
-                      <div class="InnerComment">
-                          <div class="Comment">
-                              <div class="image">
-           
+            <div class="Comments">
+                        @foreach (var item in Model.Reviews)
+                        {
+                             <div class="Comment">
+                                <div class="image" >
+                                    <img  class="image" src="@Url.Content(item.Customer.User.UserInfo.PhotoPath)" style="object-fit: cover;"/>
+                                </div>
+                                <div class="text">
+                                    <div class="Name">
+                                        <div style="display:flex;align-items:center;">
+                                            <b>@item.Customer.User.UserInfo.Name @item.Customer.User.UserInfo.Surname</b> 
+                                            <div class="starlist" style="margin-left:10px">
+                                                @for (double i = 0, rating = item.Rating; i < 5; i++)
+                                                {
+                                                    @if (rating >= 1 )
+                                                    {
+                                                        <div class="star">
+                                                            <img src="~/Images/star1.png" width="100%">
+                                                        </div>
+                                                        rating--;
+                                                    }
+                                                    else if(rating >0.5)
+                                                    {
+                                                        <div class="star">
+                                                            <img src="~/Images/star0.5.png" width="100%">
+                                                        </div>
+                                                        rating--;
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="star">
+                                                            <img src="~/Images/star0.png" width="100%">
+                                                        </div>
+                                                    }
+                                
+
+                        
+                                                }
+                                            </div>
+                                        </div>
+                                         
+                                         <div class="writeTime">
+                                            @item.CreatedTime
+                                         </div>
+                                        
+                                    </div>
+                                    <div class="content">
+                                        @item.Text
+                                    </div>  
+                                </div>
                               </div>
-                              <div class="text">
-                                  <div class="Name">
-                                      <b>Vitaliy Volovnik</b> 
-                                      <div class="writeTime">
-                                       05.05.2022 20:32
-                                      </div>
-                                  </div>
-                                  <div class="content">
-                                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem facilis rerum aspernatur officia incidunt commodi, consequuntur nisi quo alias animi illo eos porro harum, laborum quis eaque? Voluptatum, quia dolores.
-                                  </div>
-                                   
-                              </div>
-                              
-                          </div>
-                          <div class="Comment">
-                              <div class="image">
-           
-                              </div>
-                              <div class="text">
-                                  <div class="Name">
-                                      <b>Vitaliy Volovnik</b> 
-                                      <div class="writeTime">
-                                       05.05.2022 20:32
-                                      </div>
-                                  </div>
-                                  <div class="content">
-                                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem facilis rerum aspernatur officia incidunt commodi, consequuntur nisi quo alias animi illo eos porro harum, laborum quis eaque? Voluptatum, quia dolores.
-                                  </div>
-                                   
-                              </div>
-                              
-                          </div>
-                          
-                      </div>
-                 </div>
-                 
-             </div>
-            </div>
+                        }          
+                    </div>
         </div>
      </div>

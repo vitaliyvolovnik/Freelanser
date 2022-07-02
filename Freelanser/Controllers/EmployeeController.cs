@@ -1,4 +1,5 @@
 ﻿using BLL.Services;
+using Domain.Models;
 using Freelanser.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,5 +54,6 @@ namespace Freelanser.Controllers
         {
             return View(await this._userService.GetEmployeeByIdAsync(Id));
         }
+      
     }
 }

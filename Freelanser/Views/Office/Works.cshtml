@@ -4,8 +4,8 @@
     ViewData["Title"] = "Works";
 }
 @section Office{
-    <link rel="stylesheet" href="~/css/officeStylet.css" />
-    <link rel="stylesheet" href="~/css/ProfileWork.css" />
+    <link rel="stylesheet" href="~/css/officeStylet.css?v=@DateTime.Now.Millisecond" />
+    <link rel="stylesheet" href="~/css/ProfileWork.css?v=@DateTime.Now.Millisecond" />
 }
 <div class="MainDiv">
         <div class="MenuList">
@@ -19,7 +19,7 @@
             @if (Model.IsWorker)
             {
             <div class="menuItem">
-                @Html.ActionLink("Reviues","index","office",null,new {@class = "amenu"})
+                @Html.ActionLink("Reviues","ReviewPage","office",null,new {@class = "amenu"})
             </div>
             }
             <div class="menuItem">
@@ -43,8 +43,10 @@
                 </div>
                 <div class="description">
                    @item.Context
-                </div>    
-                <div class="Skills">
+                </div>  
+                @if (item.Skills.Count > 0)
+                {
+                    <div class="Skills">
                      <div class="SkillHeader">
                         Skills:
                     </div>
@@ -55,9 +57,48 @@
                         @skill.Name
                         </div>
                     }
-                </div>         
+                    </div> 
+                }
+                @if (!item.IsFinished)
+                {
+                    @if (Model.IsWorker)
+                    {
+                    
+                             <div style="display:flex;">
+                                <div class="BtnDiv">
+                                    @Html.ActionLink("Upload project","UploadProject","Work", new {workId = item.Id},new{})
+                                </div>
+                            </div>
+                    
+                   
+                    }
+                    else if(item.ProgectFiles!=null)
+                    {
+                        if (item.ProgectFiles.Count > 0)
+                        {
+                            <div style="display:flex;">
+                                <div class="BtnDiv">
+                                    @Html.ActionLink("Finish","FinishWork","Work", new {workId = item.Id},new{})
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+                else
+                {
+                    <div style="display:flex;">
+                                <div class="BtnDiv">
+                                    @Html.ActionLink("Files","FilesProj","Work", new {workId = item.Id},new{})
+                                </div>
+                            </div>
+                }
             </div>
         }
-            
+        @if (((Model.IsWorker)?Model.Employee.ExecutedWorks:Model.Customer.Work).Count==0)
+        {
+            <div style="font-size:22px;margin-top:10px;margin-left:10px"> 
+                no work was found
+            </div>
+        }
         </div>
     </div>

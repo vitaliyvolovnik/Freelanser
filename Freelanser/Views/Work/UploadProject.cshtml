@@ -1,0 +1,15 @@
+﻿@model int
+<h4>Upload all project files to the server</h4>
+
+
+<div>
+    <form asp-action="UploadProject" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="workId" value="@Model" />
+        <div class="form-group" style="display:flex;flex-direction:column; margin:10px 0px" >
+                <input type="file" name="postedFiles" multiple />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Upload Project file" class="btn btn-primary" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,89 @@
+﻿@model Domain.Models.Employee
+
+@{
+    ViewData["Title"] = "EditInfo";
+}
+
+@section Office{
+    <link rel="stylesheet" href="~/css/officeStylet.css?v=@DateTime.Now.Millisecond" />
+}
+<div class="MainDiv">
+        <div class="MenuList">
+            <div class="menuItem">
+                @Html.ActionLink("Profile","index","office",null,new {@class = "amenu"})
+                
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Edit","EditInfo","office",null,new {@class = "amenu"})
+            </div>
+
+            <div class="menuItem">
+                @Html.ActionLink("Reviues","ReviewPage","office",null,new {@class = "amenu"})
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Finished works","Works","office",new {isFinished = true},new {@class = "amenu"})
+            </div>
+            <div class="menuItem">
+                @Html.ActionLink("Current works","Works","office",new {isFinished = false},new {@class = "amenu"})
+            </div>
+        </div>
+        <div class="prof">
+            <div class="row">
+                <div class="col-md-4" style="width:100%">
+                    <div class="Comments">
+                        @foreach (var item in Model.Reviews)
+                        {
+                             <div class="Comment">
+                                <div class="image" >
+                                    <img  class="image" src="@Url.Content(item.Customer.User.UserInfo.PhotoPath)" style="object-fit: cover;"/>
+                                </div>
+                                <div class="text">
+                                    <div class="Name">
+                                        <div style="display:flex;align-items:center;">
+                                            <b>@item.Customer.User.UserInfo.Name @item.Customer.User.UserInfo.Surname</b> 
+                                            <div class="starlist" style="margin-left:10px">
+                                                @for (double i = 0, rating = item.Rating; i < 5; i++)
+                                                {
+                                                    @if (rating >= 1 )
+                                                    {
+                                                        <div class="star">
+                                                            <img src="~/Images/star1.png" width="100%">
+                                                        </div>
+                                                        rating--;
+                                                    }
+                                                    else if(rating >0.5)
+                                                    {
+                                                        <div class="star">
+                                                            <img src="~/Images/star0.5.png" width="100%">
+                                                        </div>
+                                                        rating--;
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="star">
+                                                            <img src="~/Images/star0.png" width="100%">
+                                                        </div>
+                                                    }
+                                
+
+                        
+                                                }
+                                            </div>
+                                        </div>
+                                         
+                                         <div class="writeTime">
+                                            @item.CreatedTime
+                                         </div>
+                                        
+                                    </div>
+                                    <div class="content">
+                                        @item.Text
+                                    </div>  
+                                </div>
+                              </div>
+                        }          
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

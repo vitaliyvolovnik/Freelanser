@@ -1,0 +1,25 @@
+﻿@model Domain.Models.Work
+
+@section FinishStyle{
+    <link rel="stylesheet" href="~/css/FinishStyle.css?v=@DateTime.Now.Millisecond" />
+}
+
+<div class="MainDiv">
+    <div class="title" style="font-size:28px;">
+         @Html.ActionLink(@Model.Name,"WorkPage","Work",new {Id=Model.Id},new{style="color:rgb(69, 191, 85);font-size:25px"})
+    </div>
+    <div class="title" style="font-size:22px;" >
+        completed project files
+    </div>
+    <div class="Files">
+       <ul>
+            @foreach (var item in Model.ProgectFiles)
+            {
+                <li>
+                    @Html.ActionLink(item.Name,"DownLoadFile","Work",new {fileName=item.Name,filePath=item.Path},new {style="font-size:20px"})
+               </li>
+            }
+       </ul>
+    </div>
+</div>
+
